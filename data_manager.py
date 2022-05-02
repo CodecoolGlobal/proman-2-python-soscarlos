@@ -33,7 +33,6 @@ def get_connection_data(db_name=None):
     """
     if db_name is None:
         db_name = os.environ.get('MY_PSQL_DBNAME')
-
     return {
         'dbname': db_name,
         'user': os.environ.get('MY_PSQL_USER'),
