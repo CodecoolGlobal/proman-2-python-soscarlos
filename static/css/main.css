@@ -50,6 +50,14 @@ section.board{
     border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
+input.board-title-input {
+    display: none;
+}
+
+.board-title.hidden {
+    display: none;
+}
+
 .board-title{
     margin: 13px;
     display: inline-block;

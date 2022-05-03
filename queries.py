@@ -45,11 +45,20 @@ def get_cards_for_board(board_id):
     return matching_cards
 
 
+
 def create_board(title):
-    new_board = data_manager.execute_insert(
+    new_board = data_manager.execute_query(
         """
         INSERT INTO boards (title)
         VALUES (%(title)s);   
         """,
         {"title": title}
     )
+    
+    
+def edit_title(board, board_id):
+    data_manager.execute_query(
+        """UPDATE boards
+           set title = %s
+           WHERE id = %s;"""
+        , (board["title"], board_id))
