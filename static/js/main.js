@@ -1,10 +1,9 @@
 import {boardsManager} from "./controller/boardsManager.js";
-import {anotherButton, showInputField} from "./getUserInput.js";
 
 function init() {
     boardsManager.loadBoards();
+    boardsManager.showInput();
 }
 
 init();
 
-anotherButton.addEventListener("click", showInputField);
