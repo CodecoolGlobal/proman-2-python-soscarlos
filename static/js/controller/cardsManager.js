@@ -7,6 +7,7 @@ export let cardsManager = {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         const column = await document.querySelector(".board-column");
         const columnId = column.firstElementChild.getAttribute("data-status-id");
+        // the problem here is that not all statuses are being selected and compared
         for (let card of cards) {
             if (card.status_id === columnId) {
                 const cardBuilder = htmlFactory(htmlTemplates.card);
