@@ -1,6 +1,4 @@
-import os
-
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -26,6 +24,16 @@ def get_boards():
     All the boards
     """
     return queries.get_boards()
+
+
+@app.route("/api/boards/<int:board_id>", methods=["PUT"])
+def update_board(board_id: int):
+    """
+    Update the specific board according to its id
+    """
+    new_title = request.json
+    queries.edit_title(new_title, board_id)
+    return render_template('index.html')
 
 
 @app.route("/api/boards/<int:board_id>/cards/")
