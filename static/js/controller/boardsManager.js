@@ -7,11 +7,11 @@ import {createInputField} from "../getUserInput.js";
 export let boardsManager = {
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
-        console.log(boards);
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
+            this.loadStatuses(board.id);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
@@ -19,6 +19,7 @@ export let boardsManager = {
             );
         }
     },
+    loadStatuses: loadStatuses,
 
     showInput: showTitleInput,
 
@@ -89,4 +90,22 @@ function showEditTitle(clickEvent) {
       textElement.style.display = 'block';
         }
     });
+}
+
+// TODO add column to database (boardId), create statuses for every board
+async function loadStatuses(boardId) {
+    const statuses = await dataHandler.getStatuses();
+        console.log(statuses)
+    for (let status of statuses) {
+            const columnBuilder = htmlFactory(htmlTemplates.status);
+            const content = columnBuilder(status);
+            domManager.addChild("#board-columns", content);
+            let htmlElement = document.querySelector(".board-column");
+            console.log(htmlElement.parentNode);
+            // domManager.addEventListener(
+            //     `.toggle-board-button[data-board-id="${board.id}"]`,
+            //     "click",
+            //     showHideButtonHandler
+            // );
+    }
 }

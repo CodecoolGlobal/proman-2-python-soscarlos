@@ -7,6 +7,7 @@ export let dataHandler = {
     },
     getStatuses: async function () {
         // the statuses are retrieved and then the callback function is called with the statuses
+        return await apiGet("/api/statuses");
     },
     getStatus: async function (statusId) {
         // the status is retrieved and then the callback function is called with the status
@@ -19,6 +20,7 @@ export let dataHandler = {
     },
     createNewBoard: async function createBoard(boardTitle) {
         // creates new board, saves it and calls the callback function with its data
+        boardTitle = {title: boardTitle}
         return await apiPost("/api/boards/create", boardTitle);
 
     },
@@ -27,6 +29,7 @@ export let dataHandler = {
     },
     updateBoardTitle: async function (boardTitle, boardId) {
         // changes title of board, saves it and calls the callback function with its data
+        boardTitle = {title: boardTitle}
         return await apiPut(`/api/boards/${boardId}`, boardTitle);
     }
 };
@@ -47,7 +50,7 @@ async function apiPost(url, payload) {
         headers: {
              "Content-Type": "application/json"
         },
-        body: JSON.stringify({title: payload})
+        body: JSON.stringify(payload)
     });
 
 
@@ -60,7 +63,7 @@ async function apiPut(url, payload) {
     let response = await fetch(url, {
         method: "PUT",
         headers: {"Content-type": "application/json"},
-        body: JSON.stringify({title:payload})
+        body: JSON.stringify(payload)
     });
     if (response.ok) {
         return console.log(response.ok);
