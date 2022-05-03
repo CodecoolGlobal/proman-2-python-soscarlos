@@ -46,12 +46,22 @@ def get_cards_for_board(board_id: int):
     return queries.get_cards_for_board(board_id)
 
 
+@app.route("/api/boards/create", methods=["POST"])
+def create_board():
+    board = request.json
+    board_title = board["title"]
+    queries.create_board(board_title)
+
+    return render_template("index.html")
+
+
 def main():
     app.run(debug=True)
 
     # Serving the favicon
     with app.app_context():
         app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
+
 
 
 if __name__ == '__main__':
