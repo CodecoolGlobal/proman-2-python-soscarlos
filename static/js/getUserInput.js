@@ -29,6 +29,7 @@ async function getUserInput(e) {
         await dataHandler.createNewBoard(userInput);
         util.clearRootContainer();
         await boardsManager.loadBoards();
+        await boardsManager.updateBoard();
 
         inputBtn.disabled = false;
 }
