@@ -23,6 +23,7 @@ def get_boards():
     """
     All the boards
     """
+    print("I'm here")
     return queries.get_boards()
 
 

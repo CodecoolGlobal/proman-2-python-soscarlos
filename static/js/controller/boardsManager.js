@@ -7,6 +7,7 @@ import {createInputField} from "../getUserInput.js";
 export let boardsManager = {
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
+        console.log(boards);
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
@@ -19,8 +20,8 @@ export let boardsManager = {
         }
     },
 
-    showInput: showTitleInput
-  
+    showInput: showTitleInput,
+
     updateBoard: async function () {
         const boards = await dataHandler.getBoards();
         for (let board of boards) {

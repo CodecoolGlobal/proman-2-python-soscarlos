@@ -42,7 +42,7 @@ async function apiGet(url) {
 
 async function apiPost(url, payload) {
 
-    let response = await fetch(url, {
+    await fetch(url, {
         method: "POST",
         headers: {
              "Content-Type": "application/json"
