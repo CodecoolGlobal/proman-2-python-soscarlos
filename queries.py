@@ -43,3 +43,11 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def edit_title(board, board_id):
+    data_manager.execute_update(
+        """UPDATE boards
+           set title = %s
+           WHERE id = %s;"""
+        , (board["title"], board_id))
