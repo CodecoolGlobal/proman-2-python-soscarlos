@@ -32,7 +32,7 @@ function boardBuilder(board) {
                   <button class="board-add" id="add-card">Add Card</button>
                   <button class="toggle-board-button" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="board-columns" id="board-columns"></div>
+                <div class="board-columns" data-board-id="${board.id}"></div>
             </div>
 `;
 }

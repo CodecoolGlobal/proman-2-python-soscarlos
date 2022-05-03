@@ -11,7 +11,8 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            this.loadStatuses(board.id);
+            await this.loadStatuses(board.id);
+            await this.loadCards(board.id);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
@@ -20,6 +21,8 @@ export let boardsManager = {
         }
     },
     loadStatuses: loadStatuses,
+
+    loadCards: cardsManager.loadCards,
 
     showInput: showTitleInput,
 
@@ -35,7 +38,7 @@ export let boardsManager = {
 
 function showHideButtonHandler(e) {
     const boardId = e.currentTarget.dataset.boardId;
-    cardsManager.loadCards(boardId);
+    //cardsManager.loadCards(boardId);
 //    TODO hide cords function
 }
 
@@ -95,13 +98,11 @@ function showEditTitle(clickEvent) {
 // TODO add column to database (boardId), create statuses for every board
 async function loadStatuses(boardId) {
     const statuses = await dataHandler.getStatuses();
-        console.log(statuses)
     for (let status of statuses) {
             const columnBuilder = htmlFactory(htmlTemplates.status);
             const content = columnBuilder(status);
-            domManager.addChild("#board-columns", content);
+            domManager.addChild(`.board-columns[data-board-id="${boardId}"]`, content);
             let htmlElement = document.querySelector(".board-column");
-            console.log(htmlElement.parentNode);
             // domManager.addEventListener(
             //     `.toggle-board-button[data-board-id="${board.id}"]`,
             //     "click",
