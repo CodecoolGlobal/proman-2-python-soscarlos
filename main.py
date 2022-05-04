@@ -58,18 +58,18 @@ def create_board():
 @app.route("/api/statuses")
 @json_response
 def get_statuses():
-    print(queries.get_statuses())
     return queries.get_statuses()
 
 
 @app.route("/api/statuses/create", methods=["POST"])
 def create_status():
     status = request.json
-    status_title = status["title"]
-    queries.create_status(status_title)
+    title = status["title"]
+    board_id = status["board_id"]
+    print(title, board_id)
+    queries.create_status(title, board_id)
 
     return redirect("/")
-
 
 
 def main():
@@ -78,7 +78,6 @@ def main():
     # Serving the favicon
     with app.app_context():
         app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
-
 
 
 if __name__ == '__main__':

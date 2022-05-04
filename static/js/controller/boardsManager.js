@@ -116,25 +116,30 @@ async function loadStatuses(boardId) {
 
 function showNewStatusInput(e) {
     const board = e.currentTarget.parentElement.parentElement;
+    const boardId = board.dataset.boardId;
     const newColumnBtn = board.querySelector("#add-column");
-    newColumnBtn.addEventListener("click", createNewStatus);
+    newColumnBtn.addEventListener("click", function (e) {
+        createNewStatus(e, boardId);
+    });
     newColumnBtn.classList.toggle("hidden");
 
 }
 
-function createNewStatus(e) {
+function createNewStatus(e, boardId) {
     e.target.disabled = true;
     let columnTitleInput = document.createElement("input");
     let addBtn = document.createElement("button");
     addBtn.textContent = "Add Status"
     e.target.appendChild(columnTitleInput);
     e.target.appendChild(addBtn);
-    addBtn.addEventListener("click", addNewColumn);
+    addBtn.addEventListener("click", function(e) {
+        addNewColumn(e, boardId);
+    });
 }
 
-async function addNewColumn(e) {
+async function addNewColumn(e, boardId) {
     let newStatusTitle = e.currentTarget.previousElementSibling.value;
-    await dataHandler.createNewStatus(newStatusTitle);
+    await dataHandler.createNewStatus(newStatusTitle, boardId);
     util.clearRootContainer();
     await boardsManager.loadBoards()
 }
