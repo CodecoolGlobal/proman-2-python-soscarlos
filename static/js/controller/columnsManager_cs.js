@@ -5,7 +5,6 @@ import {domManager} from "../view/domManager.js";
 export let columnManager = {
     loadColumn: async function () {
         const statuses = await dataHandler.getStatuses();
-        console.log(statuses);
         for (let status of statuses) {
             const content = buildColumn(status);
             domManager.addChild(".board-columns", content); // here we have to add class + board-id

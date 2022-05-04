@@ -60,7 +60,6 @@ function showEditTitle(clickEvent) {
     let textTitles = document.getElementsByClassName('board-title');
     for (let index = 0; index < inputs.length; index++) {
         let inputId = inputs[index].getAttribute('data-board-id');
-        console.log(inputId);
         let titleId = textTitles[index].getAttribute('data-board-id');
         if (inputId === boardId && titleId === boardId) {
             inputs[index].style.display = 'inline-block'; // consider change the display to show inline
@@ -71,7 +70,6 @@ function showEditTitle(clickEvent) {
            let clickElement =   event.target;
         do {
           if(textElement === clickElement || clickElement === inputElement) {
-            console.log('click inside');
             return;
           }
           textElement.style.display = 'inline-block'; // consider change the display to show inline
@@ -81,7 +79,6 @@ function showEditTitle(clickEvent) {
               inputElement.style.display = 'none';
           }
         } while (clickElement);
-        console.log("Clicked outside!");
       });
     inputElement.addEventListener('keypress', async function (event) {
     if (event.key === 'Enter') {
@@ -128,7 +125,7 @@ function showNewStatusInput(e) {
 
 }
 
-function createNewStatus(e, boardId) {
+async function createNewStatus(e, boardId) {
     e.target.disabled = true;
     let columnTitleInput = document.createElement("input");
     let addBtn = document.createElement("button");
@@ -142,7 +139,9 @@ function createNewStatus(e, boardId) {
 
 async function addNewColumn(e, boardId) {
     let newStatusTitle = e.currentTarget.previousElementSibling.value;
-    await dataHandler.createNewStatus(newStatusTitle, boardId);
-    util.clearRootContainer();
-    await boardsManager.loadBoards()
+    if (newStatusTitle) {
+        await dataHandler.createNewStatus(newStatusTitle, boardId);
+        util.clearRootContainer();
+        await boardsManager.loadBoards()
+    }
 }

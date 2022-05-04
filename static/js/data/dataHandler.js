@@ -22,7 +22,6 @@ export let dataHandler = {
         // creates new board, saves it and calls the callback function with its data
         boardTitle = {title: boardTitle}
         return await apiPost("/api/boards/create", boardTitle);
-
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
         let card = {"title": cardTitle,
@@ -30,6 +29,10 @@ export let dataHandler = {
                     "card_order": 1};
         return await apiPost( `/api/boards/${boardId}/cards/create`, card);
         // creates new card, saves it and calls the callback function with its data
+    },
+    deleteCard: async function (cardId) {
+        let id = {"id": cardId};
+      return   await apiDelete(`/api/cards/delete/${cardId}`, id);
     },
     createNewStatus: async function (statusTitle, boardId) {
         let status =
@@ -60,30 +63,39 @@ async function apiGet(url) {
 
 async function apiPost(url, payload) {
 
-    await fetch(url, {
+    let response = await fetch(url, {
         method: "POST",
         headers: {
              "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
     });
-
-
-}
-
-async function apiDelete(url) {
+    if (response.ok) {
+        return console.log(response.ok);
+    }
 }
 
 async function apiPut(url, payload) {
     let response = await fetch(url, {
         method: "PUT",
-        headers: {"Content-type": "application/json"},
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(payload)
     });
     if (response.ok) {
         return console.log(response.ok);
     }
 }
+
+async function apiDelete(url) {
+    let response = await fetch(url, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+    });
+    if (response.ok) {
+        return console.log(response.ok);
+    }
+}
+
 
 async function apiPatch(url) {
 }
