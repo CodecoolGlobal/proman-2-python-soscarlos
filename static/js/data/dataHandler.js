@@ -27,6 +27,10 @@ export let dataHandler = {
     createNewCard: async function (cardTitle, boardId, statusId) {
         // creates new card, saves it and calls the callback function with its data
     },
+    createNewStatus: async function (statusTitle) {
+        statusTitle = {title: statusTitle};
+        return await apiPost('/api/statuses/create', statusTitle);
+    },
     updateBoardTitle: async function (boardTitle, boardId) {
         // changes title of board, saves it and calls the callback function with its data
         boardTitle = {title: boardTitle}

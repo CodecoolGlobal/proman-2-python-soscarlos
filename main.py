@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -58,7 +58,18 @@ def create_board():
 @app.route("/api/statuses")
 @json_response
 def get_statuses():
+    print(queries.get_statuses())
     return queries.get_statuses()
+
+
+@app.route("/api/statuses/create", methods=["POST"])
+def create_status():
+    status = request.json
+    status_title = status["title"]
+    queries.create_status(status_title)
+
+    return redirect("/")
+
 
 
 def main():
