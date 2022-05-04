@@ -71,3 +71,21 @@ def create_card(card, board_id):
          "board_id": board_id,
          "status_id": card["status_id"],
          "card_order": card["card_order"]})
+
+    
+def get_statuses():
+    return data_manager.execute_select(
+        """SELECT * FROM statuses
+        ;
+        """
+    )
+
+
+def create_status(status_title):
+    return data_manager.execute_query(
+        """
+        INSERT INTO statuses (title)
+        VALUES (%(title)s)
+        """,
+        {"title": status_title}
+    )

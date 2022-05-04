@@ -3,15 +3,18 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 import {createInputField} from "../getUserInput.js";
+import {util} from "../util/util.js";
 
 export let boardsManager = {
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
-        console.log(boards);
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
+
+            await this.loadStatuses(board.id);
+
             domManager.addEventListener(
                 `.board-add[data-board-id="${board.id}"]`,
                 "click",
@@ -24,6 +27,8 @@ export let boardsManager = {
             );
         }
     },
+
+    loadStatuses: loadStatuses,
 
     showInput: showTitleInput,
 
@@ -39,17 +44,16 @@ export let boardsManager = {
 
 function showHideButtonHandler(e) {
     const boardId = e.currentTarget.dataset.boardId;
-    cardsManager.loadCards(boardId);
-//    TODO hide cords function
+    const columnsDiv = document.querySelector(`.board-columns[data-board-id="${boardId}"]`);
+    columnsDiv.classList.toggle("hidden");
+    showNewStatusInput(e);
 }
-
 
 function showTitleInput() {
-    let anotherButton = document.querySelector("#show-input");
-    anotherButton.addEventListener('click', createInputField);
+    let addBoard = document.querySelector("#show-input");
+    addBoard.addEventListener('click', createInputField);
 
 }
-
 
 function showEditTitle(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
@@ -96,4 +100,45 @@ function showEditTitle(clickEvent) {
 function addCardHandler (event) {
     const boardId = event.currentTarget.dataset.boardId;
     cardsManager.addCard(event, boardId);
+}
+
+async function loadStatuses(boardId) {
+
+    const statuses = await dataHandler.getStatuses();
+    for (let status of statuses) {
+            const columnBuilder = htmlFactory(htmlTemplates.status);
+            const content = columnBuilder(status, boardId);
+            domManager.addChild(`.board-columns[data-board-id="${boardId}"]`, content);
+            await cardsManager.loadCards(boardId, status.id);
+            domManager.addEventListener(
+                `.toggle-board-button[data-board-id="${boardId}"]`,
+                "click",
+                showHideButtonHandler
+            );
+    }
+}
+
+function showNewStatusInput(e) {
+    const board = e.currentTarget.parentElement.parentElement;
+    const newColumnBtn = board.querySelector("#add-column");
+    newColumnBtn.addEventListener("click", createNewStatus);
+    newColumnBtn.classList.toggle("hidden");
+
+}
+
+function createNewStatus(e) {
+    e.target.disabled = true;
+    let columnTitleInput = document.createElement("input");
+    let addBtn = document.createElement("button");
+    addBtn.textContent = "Add Status"
+    e.target.appendChild(columnTitleInput);
+    e.target.appendChild(addBtn);
+    addBtn.addEventListener("click", addNewColumn);
+}
+
+async function addNewColumn(e) {
+    let newStatusTitle = e.currentTarget.previousElementSibling.value;
+    await dataHandler.createNewStatus(newStatusTitle);
+    util.clearRootContainer();
+    await boardsManager.loadBoards()
 }
