@@ -69,3 +69,13 @@ def get_statuses():
         ;
         """
     )
+
+
+def create_status(status_title):
+    return data_manager.execute_query(
+        """
+        INSERT INTO statuses (title)
+        VALUES (%(title)s)
+        """,
+        {"title": status_title}
+    )

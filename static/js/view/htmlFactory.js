@@ -27,19 +27,25 @@ function boardBuilder(board) {
     return `
             <div class="board" data-board-id=${board.id}><br>
                 <div class="board-header" data-board-id="${board.id}">
-                  <span class="board-title" data-board-id="${board.id}">${board.title}</span>
-                  <input class="board-title-input" data-board-id="${board.id}" type="text" value="${board.title}">
-                  <button class="board-add" id="add-card">Add Card</button>
-                  <button class="toggle-board-button" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
+                      <span class="board-title" data-board-id="${board.id}">${board.title}</span>
+                      <input class="board-title-input" data-board-id="${board.id}" type="text" value="${board.title}">
+                      <button class="board-add" id="add-card">Add Card</button>
+                      <button class="board-add hidden" id="add-column">Add new column</button>
+                      <button class="toggle-board-button" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="board-columns" data-board-id="${board.id}"></div>
+                <div class="board-columns hidden" data-board-id="${board.id}"></div>
             </div>
 `;
+
 }
 
 function cardBuilder(card) {
-    return `<div class="card" data-card-id="${card.id}">${card.title}</div>`;
+    return `<div class="card" data-card-id="${card.id}">
+                <div className="card-remove"><i className="fas fa-trash-alt"></i></div>
+                <div className="card-title">${card.title}</div>        
+            </div>`;
 }
+
 
 function columnBuilder(status, boardId) {
     return `
@@ -47,5 +53,5 @@ function columnBuilder(status, boardId) {
             <div class="board-column-title" data-status-id=${status.id}>${status.title}</div>
             <div class="board-column-content" data-status-id=${status.id} data-board-id="${boardId}"></div>
         </div>
-    `
+    `;
 }
