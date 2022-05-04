@@ -3,6 +3,7 @@ import {boardsManager} from "./controller/boardsManager.js";
 import {util} from "./util/util.js";
 
 const inputBtn = document.querySelector("#show-input");
+const statuses = ["new", "in progress", "testing", "done"];
 
 
 export function createInputField() {
@@ -27,6 +28,12 @@ async function getUserInput(e) {
         deleteInputDiv();
 
         await dataHandler.createNewBoard(userInput);
+        let boards = document.querySelectorAll(".board");
+        for (let i=0; i < statuses.length; i++){
+                let title = statuses[i];
+                let boardId = boards.length + 1;
+                await dataHandler.createNewStatus(title, boardId);
+        }
         util.clearRootContainer();
         await boardsManager.loadBoards();
         await boardsManager.updateBoard();

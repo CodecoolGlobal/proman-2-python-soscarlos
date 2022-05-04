@@ -46,10 +46,10 @@ def get_cards_for_board(board_id):
 
 
 def create_board(title):
-    new_board = data_manager.execute_query(
+    data_manager.execute_query(
         """
         INSERT INTO boards (title)
-        VALUES (%(title)s);   
+        VALUES (%(title)s);
         """,
         {"title": title}
     )
@@ -81,11 +81,13 @@ def get_statuses():
     )
 
 
-def create_status(status_title):
+def create_status(title, board_id):
     return data_manager.execute_query(
         """
-        INSERT INTO statuses (title)
-        VALUES (%(title)s)
+        INSERT INTO statuses (title, board_id)
+        VALUES (%(title)s, %(board_id)s)
         """,
-        {"title": status_title}
+        {"title": title,
+         "board_id": board_id
+         }
     )

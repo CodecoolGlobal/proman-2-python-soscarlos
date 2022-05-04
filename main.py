@@ -66,15 +66,16 @@ def create_card(board_id: int):
 @app.route("/api/statuses")
 @json_response
 def get_statuses():
-    print(queries.get_statuses())
     return queries.get_statuses()
 
 
 @app.route("/api/statuses/create", methods=["POST"])
 def create_status():
     status = request.json
-    status_title = status["title"]
-    queries.create_status(status_title)
+    title = status["title"]
+    board_id = status["board_id"]
+    print(title, board_id)
+    queries.create_status(title, board_id)
 
     return redirect("/")
 
