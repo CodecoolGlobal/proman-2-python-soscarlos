@@ -104,13 +104,15 @@ async function loadStatuses(boardId) {
     for (let status of statuses) {
             const columnBuilder = htmlFactory(htmlTemplates.status);
             const content = columnBuilder(status, boardId);
-            domManager.addChild(`.board-columns[data-board-id="${boardId}"]`, content);
-            await cardsManager.loadCards(boardId, status.id);
-            domManager.addEventListener(
-                `.toggle-board-button[data-board-id="${boardId}"]`,
-                "click",
-                showHideButtonHandler
-            );
+            if (status.board_id === boardId){
+                domManager.addChild(`.board-columns[data-board-id="${boardId}"]`, content);
+                await cardsManager.loadCards(boardId, status.id);
+                domManager.addEventListener(
+                    `.toggle-board-button[data-board-id="${boardId}"]`,
+                    "click",
+                    showHideButtonHandler
+                );
+            }
     }
 }
 
