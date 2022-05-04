@@ -41,11 +41,11 @@ function boardBuilder(board) {
 
 function cardBuilder(card) {
     return `<div class="card" data-card-id="${card.id}">
-                <div className="card-remove"><i className="fas fa-trash-alt"></i></div>
-                <div className="card-title">${card.title}</div>        
-            </div>`;
+                <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                <div class="card-title" data-card-id="${card.id}">${card.title}</div>
+            </div>
+            `;
 }
-
 
 function columnBuilder(status, boardId) {
     return `

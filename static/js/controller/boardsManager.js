@@ -16,6 +16,11 @@ export let boardsManager = {
             await this.loadStatuses(board.id);
 
             domManager.addEventListener(
+                `.board-add[data-board-id="${board.id}"]`,
+                "click",
+            addCardHandler
+            );
+            domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
                 showHideButtonHandler
@@ -44,15 +49,10 @@ function showHideButtonHandler(e) {
     showNewStatusInput(e);
 }
 
-
 function showTitleInput() {
     let addBoard = document.querySelector("#show-input");
     addBoard.addEventListener('click', createInputField);
 
-}
-
-function logFunction() {
-    console.log("click on title");
 }
 
 function showEditTitle(clickEvent) {
@@ -66,7 +66,7 @@ function showEditTitle(clickEvent) {
         console.log(inputId);
         let titleId = textTitles[index].getAttribute('data-board-id');
         if (inputId === boardId && titleId === boardId) {
-            inputs[index].style.display = 'block';
+            inputs[index].style.display = 'inline-block'; // consider change the display to show inline
             textTitles[index].style.display = 'none';
         }
     }
@@ -77,7 +77,7 @@ function showEditTitle(clickEvent) {
             console.log('click inside');
             return;
           }
-          textElement.style.display = 'block';
+          textElement.style.display = 'inline-block'; // consider change the display to show inline
           let inputElementId = inputElement.getAttribute('data-board-id');
           clickElement = clickElement.parentNode;
           if (inputElementId === boardId) {
@@ -92,12 +92,16 @@ function showEditTitle(clickEvent) {
       textElement.innerText = newTitle;
       await dataHandler.updateBoardTitle(newTitle, boardId);
       inputElement.style.display = 'none';
-      textElement.style.display = 'block';
+      textElement.style.display = 'inline-block'; // consider change the display to show inline
         }
     });
 }
 
-// TODO add column to database (boardId), create statuses for every board
+function addCardHandler (event) {
+    const boardId = event.currentTarget.dataset.boardId;
+    cardsManager.addCard(event, boardId);
+}
+
 async function loadStatuses(boardId) {
 
     const statuses = await dataHandler.getStatuses();

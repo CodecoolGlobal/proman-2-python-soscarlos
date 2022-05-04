@@ -63,6 +63,16 @@ def edit_title(board, board_id):
         , (board["title"], board_id))
 
 
+def create_card(card, board_id):
+    data_manager.execute_query(
+        """INSERT INTO cards (board_id, status_id, title, card_order)
+        VALUES (%(board_id)s, %(status_id)s, %(title)s, %(card_order)s)""",
+        {"title": card["title"],
+         "board_id": board_id,
+         "status_id": card["status_id"],
+         "card_order": card["card_order"]})
+
+    
 def get_statuses():
     return data_manager.execute_select(
         """SELECT * FROM statuses
