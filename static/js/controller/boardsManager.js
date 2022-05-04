@@ -60,7 +60,6 @@ function showEditTitle(clickEvent) {
     let textTitles = document.getElementsByClassName('board-title');
     for (let index = 0; index < inputs.length; index++) {
         let inputId = inputs[index].getAttribute('data-board-id');
-        console.log(inputId);
         let titleId = textTitles[index].getAttribute('data-board-id');
         if (inputId === boardId && titleId === boardId) {
             inputs[index].style.display = 'inline-block'; // consider change the display to show inline

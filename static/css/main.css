@@ -75,6 +75,7 @@ input.board-title-input {
 .board-columns{
     display: flex;
     flex-wrap: nowrap;
+    background-color: lightgray;
 }
 
 .board-column{
