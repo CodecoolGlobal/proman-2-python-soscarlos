@@ -25,6 +25,9 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
+            domManager.addEventListener(`.board-title[data-board-id="${board.id}"]`,
+                "click",
+                showEditTitle)
         }
     },
 
@@ -32,14 +35,6 @@ export let boardsManager = {
 
     showInput: showTitleInput,
 
-    updateBoard: async function () {
-        const boards = await dataHandler.getBoards();
-        for (let board of boards) {
-            domManager.addEventListener(`.board-title[data-board-id="${board.id}"]`,
-                "click",
-                showEditTitle)
-        }
-    },
 };
 
 function showHideButtonHandler(e) {
@@ -102,7 +97,7 @@ function addCardHandler (event) {
     cardsManager.addCard(event, boardId);
 }
 
-async function loadStatuses(boardId) {
+export async function loadStatuses(boardId) {
 
     const statuses = await dataHandler.getStatuses();
     for (let status of statuses) {
