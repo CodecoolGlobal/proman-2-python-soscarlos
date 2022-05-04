@@ -1,11 +1,11 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
+import {loadStatuses} from "./boardsManager.js";
 
 export let cardsManager = {
     loadCards: async function (boardId, statusId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
-        console.log(cards);
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
@@ -40,7 +40,7 @@ async function createCard(event) {
     await dataHandler.createNewCard(cardName, boardId, defaultStatusId);
     saveButton.classList.toggle('hidden');
     addInput.classList.toggle('hidden');
-    console.log(saveButton, addInput);
+    await loadStatuses(boardId);
 }
 
 function deleteButtonHandler(clickEvent) {
