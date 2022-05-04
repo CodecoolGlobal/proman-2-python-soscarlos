@@ -40,7 +40,9 @@ export let boardsManager = {
 function showHideButtonHandler(e) {
     const boardId = e.currentTarget.dataset.boardId;
     const columnsDiv = document.querySelector(`.board-columns[data-board-id="${boardId}"]`);
+    const addBtn = document.querySelector(`.board-add[data-board-id="${boardId}"]`);
     columnsDiv.classList.toggle("hidden");
+    addBtn.classList.toggle("hidden");
     showNewStatusInput(e);
 }
 

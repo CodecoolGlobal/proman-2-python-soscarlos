@@ -36,7 +36,6 @@ async function getUserInput(e) {
         }
         util.clearRootContainer();
         await boardsManager.loadBoards();
-        await boardsManager.updateBoard();
 
         inputBtn.disabled = false;
 }

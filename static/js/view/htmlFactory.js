@@ -29,7 +29,7 @@ function boardBuilder(board) {
                 <div class="board-header" data-board-id="${board.id}">
                       <span class="board-title" data-board-id="${board.id}">${board.title}</span>
                       <input class="board-title-input" data-board-id="${board.id}" type="text" value="${board.title}">
-                      <button class="board-add" data-board-id="${board.id}" id="add-card">Add Card</button>
+                      <button class="board-add hidden" data-board-id="${board.id}" id="add-card">Add Card</button>
                       <button class="board-add hidden" id="add-column">Add new column</button>
                       <button class="toggle-board-button" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                 </div>

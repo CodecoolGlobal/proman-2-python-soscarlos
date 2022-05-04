@@ -1,15 +1,18 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
-import {loadStatuses} from "./boardsManager.js";
+import {boardsManager} from "./boardsManager.js";
+import {util} from "../util/util.js";
 
 export let cardsManager = {
     loadCards: async function (boardId, statusId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
+            console.log(card.status_id, statusId)
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
             if (card.status_id === statusId) {
+                console.log(card);
                 domManager.addChild(`.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
                 domManager.addEventListener(
                     `.card[data-card-id="${card.id}"]`,
@@ -19,7 +22,7 @@ export let cardsManager = {
             }
         }
     },
-    addCard: async function (event, boardId) {
+    addCard: async function (event) {
         event.target.disabled = true;
         let addCardInput = document.createElement('input');
         let addCardInputButton = document.createElement('button');
@@ -35,12 +38,16 @@ async function createCard(event) {
     let saveButton = event.target,
         addInput = saveButton.previousSibling,
         cardName = addInput.value,
-        defaultStatusId = 1,
         boardId = saveButton.parentElement.dataset.boardId;
-    await dataHandler.createNewCard(cardName, boardId, defaultStatusId);
+    const statusId =
+        saveButton.parentElement.parentElement.nextElementSibling.firstElementChild.getAttribute("data-status-id");
+    await dataHandler.createNewCard(cardName, boardId, statusId);
     saveButton.classList.toggle('hidden');
     addInput.classList.toggle('hidden');
-    await loadStatuses(boardId);
+    const addButton = saveButton.parentElement;
+    addButton.disabled = false;
+    util.clearRootContainer();
+    await boardsManager.loadBoards();
 }
 
 function deleteButtonHandler(clickEvent) {
