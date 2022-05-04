@@ -1,3 +1,5 @@
+import {dataHandler} from "./data/dataHandler.js";
+
 const dom = {
     hasClass: function (el, cls) {
         return el.classList.contains(cls);
@@ -56,6 +58,9 @@ function handleDragStart(e) {
     this.classList.add('dragged');
     // ui.mixedCardsContainer.classList.toggle('active');
     currentCard.dragged = e.currentTarget;
+    const currentColumn = currentCard.dragged.parentElement;
+    const currentColumnId = currentColumn.getAttribute("data-status-id");
+    currentCard.statusId = currentColumnId;
     console.log("Drag start of", currentCard.dragged);
 }
 
@@ -63,11 +68,13 @@ function handleDragEnd() {
     // highlightCardSlots(false);
     this.classList.remove('dragged');
     // ui.mixedCardsContainer.classList.toggle('active');
-    const currentColumn = currentCard.dragged.parentElement;
-    const currentColumnId = currentColumn.getAttribute("data-status-id");
-    console.log(currentColumnId);
+    const cardId = currentCard.dragged.getAttribute("data-card-id");
+    const newColumn = currentCard.dragged.parentElement;
+    const newColumnId = newColumn.getAttribute("data-status-id");
+    dataHandler.updateStatusId(cardId, newColumnId, currentCard.statusId);
     console.log("Drag end of", currentCard.dragged);
     currentCard.dragged = null;
+    currentCard.statusId = null;
 }
 
 function handleDragOver(e) {
