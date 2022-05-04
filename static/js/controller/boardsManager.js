@@ -12,7 +12,6 @@ export let boardsManager = {
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
             await this.loadStatuses(board.id);
-            await this.loadCards(board.id);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
@@ -21,8 +20,6 @@ export let boardsManager = {
         }
     },
     loadStatuses: loadStatuses,
-
-    loadCards: cardsManager.loadCards,
 
     showInput: showTitleInput,
 
@@ -100,9 +97,10 @@ async function loadStatuses(boardId) {
     const statuses = await dataHandler.getStatuses();
     for (let status of statuses) {
             const columnBuilder = htmlFactory(htmlTemplates.status);
-            const content = columnBuilder(status);
+            const content = columnBuilder(status, boardId);
             domManager.addChild(`.board-columns[data-board-id="${boardId}"]`, content);
-            let htmlElement = document.querySelector(".board-column");
+            await cardsManager.loadCards(boardId, status.id);
+            // let htmlElement = document.querySelector(".board-column");
             // domManager.addEventListener(
             //     `.toggle-board-button[data-board-id="${board.id}"]`,
             //     "click",

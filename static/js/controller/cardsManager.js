@@ -3,16 +3,13 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 
 export let cardsManager = {
-    loadCards: async function (boardId) {
+    loadCards: async function (boardId, statusId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
-        const column = await document.querySelector(".board-column");
-        const columnId = column.firstElementChild.getAttribute("data-status-id");
-        // the problem here is that not all statuses are being selected and compared
         for (let card of cards) {
-            if (card.status_id === columnId) {
-                const cardBuilder = htmlFactory(htmlTemplates.card);
-                const content = cardBuilder(card);
-                domManager.addChild(`.board-column-content[data-status-id="${columnId}"]`, content);
+            const cardBuilder = htmlFactory(htmlTemplates.card);
+            const content = cardBuilder(card);
+            if (card.status_id === statusId) {
+                domManager.addChild(`.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
                 domManager.addEventListener(
                     `.card[data-card-id="${card.id}"]`,
                     "click",
