@@ -45,7 +45,6 @@ def get_cards_for_board(board_id):
     return matching_cards
 
 
-
 def create_board(title):
     new_board = data_manager.execute_query(
         """
@@ -62,3 +61,11 @@ def edit_title(board, board_id):
            set title = %s
            WHERE id = %s;"""
         , (board["title"], board_id))
+
+
+def get_statuses():
+    return data_manager.execute_select(
+        """SELECT * FROM statuses
+        ;
+        """
+    )

@@ -23,7 +23,6 @@ def get_boards():
     """
     All the boards
     """
-    print("I'm here")
     return queries.get_boards()
 
 
@@ -54,6 +53,12 @@ def create_board():
     queries.create_board(board_title)
 
     return render_template("index.html")
+
+
+@app.route("/api/statuses")
+@json_response
+def get_statuses():
+    return queries.get_statuses()
 
 
 def main():

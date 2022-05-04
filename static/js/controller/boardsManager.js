@@ -7,11 +7,11 @@ import {createInputField} from "../getUserInput.js";
 export let boardsManager = {
     loadBoards: async function () {
         const boards = await dataHandler.getBoards();
-        console.log(boards);
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
+            await this.loadStatuses(board.id);
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
@@ -19,6 +19,7 @@ export let boardsManager = {
             );
         }
     },
+    loadStatuses: loadStatuses,
 
     showInput: showTitleInput,
 
@@ -34,7 +35,7 @@ export let boardsManager = {
 
 function showHideButtonHandler(e) {
     const boardId = e.currentTarget.dataset.boardId;
-    cardsManager.loadCards(boardId);
+    //cardsManager.loadCards(boardId);
 //    TODO hide cords function
 }
 
@@ -89,4 +90,21 @@ function showEditTitle(clickEvent) {
       textElement.style.display = 'block';
         }
     });
+}
+
+// TODO add column to database (boardId), create statuses for every board
+async function loadStatuses(boardId) {
+    const statuses = await dataHandler.getStatuses();
+    for (let status of statuses) {
+            const columnBuilder = htmlFactory(htmlTemplates.status);
+            const content = columnBuilder(status, boardId);
+            domManager.addChild(`.board-columns[data-board-id="${boardId}"]`, content);
+            await cardsManager.loadCards(boardId, status.id);
+            // let htmlElement = document.querySelector(".board-column");
+            // domManager.addEventListener(
+            //     `.toggle-board-button[data-board-id="${board.id}"]`,
+            //     "click",
+            //     showHideButtonHandler
+            // );
+    }
 }
