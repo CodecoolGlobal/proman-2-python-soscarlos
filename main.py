@@ -23,7 +23,6 @@ def get_boards():
     """
     All the boards
     """
-    print("I'm here")
     return queries.get_boards()
 
 
@@ -41,7 +40,7 @@ def update_board(board_id: int):
 @json_response
 def get_cards_for_board(board_id: int):
     """
-    All cards that belongs to a board
+    All cards that belong to a board
     :param board_id: id of the parent board
     """
     return queries.get_cards_for_board(board_id)
@@ -56,13 +55,20 @@ def create_board():
     return render_template("index.html")
 
 
+@app.route("/api/boards/<int:board_id>/cards/create", methods=["POST"])
+def create_card(board_id: int):
+    card = request.json
+    queries.create_card(card, board_id)
+
+    return render_template("index.html")
+
+
 def main():
     app.run(debug=True)
 
     # Serving the favicon
     with app.app_context():
         app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
-
 
 
 if __name__ == '__main__':

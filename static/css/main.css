@@ -135,3 +135,7 @@ input.board-title-input {
 .card-title{
     padding-right: 16px;
 }
+
+.hidden {
+    display: none;
+}

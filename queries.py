@@ -45,7 +45,6 @@ def get_cards_for_board(board_id):
     return matching_cards
 
 
-
 def create_board(title):
     new_board = data_manager.execute_query(
         """
@@ -62,3 +61,13 @@ def edit_title(board, board_id):
            set title = %s
            WHERE id = %s;"""
         , (board["title"], board_id))
+
+
+def create_card(card, board_id):
+    data_manager.execute_query(
+        """INSERT INTO cards (board_id, status_id, title, card_order)
+        VALUES (%(board_id)s, %(status_id)s, %(title)s, %(card_order)s)""",
+        {"title": card["title"],
+         "board_id": board_id,
+         "status_id": card["status_id"],
+         "card_order": card["card_order"]})

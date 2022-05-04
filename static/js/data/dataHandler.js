@@ -23,11 +23,18 @@ export let dataHandler = {
 
     },
     createNewCard: async function (cardTitle, boardId, statusId) {
+        let card = {"title": cardTitle,
+                    "status_id": statusId,
+                    "card_order": 1};
+        return await apiPost( `/api/boards/${boardId}/cards/create`, card);
         // creates new card, saves it and calls the callback function with its data
     },
     updateBoardTitle: async function (boardTitle, boardId) {
         // changes title of board, saves it and calls the callback function with its data
         return await apiPut(`/api/boards/${boardId}`, boardTitle);
+    },
+    updateStatusName: async function (statusName, boardId) {
+      return await apiPut("");
     }
 };
 
@@ -47,7 +54,7 @@ async function apiPost(url, payload) {
         headers: {
              "Content-Type": "application/json"
         },
-        body: JSON.stringify({title: payload})
+        body: JSON.stringify(payload)
     });
 
 
