@@ -4,6 +4,9 @@ const dom = {
     hasClass: function (el, cls) {
         return el.classList.contains(cls);
     },
+    hasId: function (el, id) {
+        return el.getAttribute("data-status-id") == id;
+    }
 };
 
 const ui = {
@@ -14,6 +17,7 @@ const ui = {
 const currentCard = {
     dragged: null,
     statusId: null,
+    newStatusId: null,
 };
 
 export function initDragAndDrop() {
@@ -71,6 +75,7 @@ function handleDragEnd() {
     const cardId = currentCard.dragged.getAttribute("data-card-id");
     const newColumn = currentCard.dragged.parentElement;
     const newColumnId = newColumn.getAttribute("data-status-id");
+    currentCard.newStatusId = newColumnId;
     dataHandler.updateStatusId(cardId, newColumnId, currentCard.statusId);
     console.log("Drag end of", currentCard.dragged);
     // this.classList.remove(".active");
@@ -94,9 +99,33 @@ function handleDrop(e) {
     e.preventDefault();
     const dropzone = e.currentTarget;
     console.log("Drop of", dropzone);
+    const current = currentCard.dragged;
+    const cards = ui.cards;
+    const newStatusId = currentCard.newStatusId;
+    const statusCards = [];
 
     if (dom.hasClass(dropzone, "board-column-content")) {
         dropzone.appendChild(currentCard.dragged);
-        return;
     }
+
+    cards.forEach(function (card) {
+        if (dom.hasId(card, newStatusId)) {
+            console.log("yayyyyyyy");
+        }
+    });
+
+    // ui.cards.forEach(function (card) {
+    //     if (card != current) {
+    //         let currentPos = 0, droppedPos = 0;
+    //         for (let it=0; it<cards.length; it++) {
+    //             if (current == cards[it]) { currentPos = it; }
+    //             if (card == cards[it]) { droppedPos = it; }
+    //         }
+    //         if (currentPos < droppedPos) {
+    //             card.parentNode.insertBefore(current, card.nextSibling);
+    //         } else {
+    //             card.parentNode.insertBefore(current, card);
+    //         }
+    //     }
+    // });
 }

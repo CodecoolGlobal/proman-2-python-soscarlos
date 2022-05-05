@@ -37,7 +37,7 @@ async function getUserInput(e) {
         }
         util.clearRootContainer();
         await boardsManager.loadBoards();
-        await initDragAndDrop();
+        // await initDragAndDrop();
 
         inputBtn.disabled = false;
 }

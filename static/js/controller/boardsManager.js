@@ -161,6 +161,6 @@ async function addNewColumn(e, boardId) {
         await dataHandler.createNewStatus(newStatusTitle, boardId);
         util.clearColumnsContainer(boardId);
         await boardsManager.loadStatuses(+boardId);
-        await initDragAndDrop();
+        // await initDragAndDrop();
     }
 }
