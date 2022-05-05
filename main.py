@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, make_response
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -90,11 +90,11 @@ def create_status():
     return redirect("/")
 
 
-@app.route("/api/cards/delete/<int:card_id>")
+@app.route("/api/cards/delete/<int:card_id>", methods=["DELETE"])
 def delete_card(card_id):
     queries.delete_card(card_id)
 
-    return redirect("/")
+    return make_response("201")
 
 
 def main():
