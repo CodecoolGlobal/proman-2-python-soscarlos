@@ -4,6 +4,9 @@ const dragged = {
     cardId: null,
     oldStatusId: null,
     newStatusId: null,
+    cardsInColumnOld: null,
+    cardsInColumnNew: null,
+    oldPos: null,
 }
 
 export function initDragAndDrop() {
@@ -15,15 +18,42 @@ export function initDragAndDrop() {
             dragged.cardId = draggable.getAttribute("data-card-id");
             dragged.oldStatusId = draggable.getAttribute("data-status-id");
             draggable.classList.add('dragging');
+            dragged.cardsInColumnOld = [...draggable.parentElement.children];
+            dragged.cardsInColumnOld.forEach(function (card) {
+                if (card === draggable) {
+                    let currentPos = 0;
+                    for (let it=0; it<dragged.cardsInColumnOld.length; it++) {
+                        if (card === dragged.cardsInColumnOld[it]) { currentPos = it; }
+                    }
+                    dragged.oldPos = currentPos + 1;
+                }
+            });
         });
 
         draggable.addEventListener('dragend', () => {
             draggable.classList.remove('dragging');
             dragged.newStatusId = draggable.parentElement.getAttribute("data-status-id");
-            if (dragged.newStatusId != dragged.oldStatusId) {
+            if (dragged.newStatusId !== dragged.oldStatusId) {
                 dataHandler.updateStatusId(dragged.cardId, dragged.newStatusId, dragged.oldStatusId);
             }
-            console.log(dragged.cardId, dragged.newStatusId, dragged.oldStatusId);
+            if (dragged.newStatusId === dragged.oldStatusId) {
+                const cardCount = draggable.parentElement.childElementCount;
+                dragged.cardsInColumnNew = [...draggable.parentElement.children];
+                let newOrderNumber = 0;
+                dragged.cardsInColumnNew.forEach(function (card) {
+                    if (card === draggable) {
+                        let droppedPos = 0;
+                        for (let it=0; it<cardCount; it++) {
+                            if (card === dragged.cardsInColumnNew[it]) { droppedPos = it; }
+                        }
+                        newOrderNumber = droppedPos + 1;
+                        dataHandler.updateCardOrder(dragged.cardId, newOrderNumber,
+                            dragged.oldStatusId, dragged.oldPos);
+                    }
+                });
+            }
+            dragged.cardId = null; dragged.oldStatusId = null; dragged.newStatusId = null;
+            dragged.oldPos = null; dragged.cardsInColumnOld = null; dragged.cardsInColumnNew = null;
         });
 
         containers.forEach(container => {

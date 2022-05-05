@@ -57,6 +57,16 @@ def update_status_id(card_id: int, status_id: int):
     return render_template('index.html')
 
 
+@app.route("/api/cards/<int:card_id>/update/<int:status_id>/card_order", methods=["PUT"])
+def update_card_order(card_id: int, status_id: int):
+    new_order = request.json
+    new_order_number = new_order["new_order_number"]
+    old_pos = new_order["old_card_position"]
+    queries.update_card_order(card_id, new_order_number)
+    queries.update_cards_order(card_id, new_order_number, status_id, old_pos)
+    return render_template('index.html')
+
+
 @app.route("/api/boards/<int:board_id>/cards/")
 @json_response
 def get_cards_for_board(board_id: int):

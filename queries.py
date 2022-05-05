@@ -34,11 +34,11 @@ def get_boards():
 
 
 def get_cards_for_board(board_id):
-
     matching_cards = data_manager.execute_select(
         """
         SELECT * FROM cards
         WHERE cards.board_id = %(board_id)s
+        ORDER BY card_order ASC
         ;
         """
         , {"board_id": board_id})
@@ -54,8 +54,8 @@ def create_board(title):
         """,
         {"title": title}
     )
-    
-    
+
+
 def edit_title(board, board_id):
     data_manager.execute_query(
         """UPDATE boards
@@ -82,7 +82,7 @@ def delete_card(card_id):
         """,
         {"id": card_id})
 
-    
+
 def get_statuses():
     return data_manager.execute_select(
         """SELECT * FROM statuses
@@ -120,3 +120,28 @@ def update_status_id(new_status_id, card_id, status_id):
         WHERE (id = %s AND status_id = %s);
         """
         , (new_status_id, card_id, status_id))
+
+
+def update_card_order(card_id, new_order_number):
+    data_manager.execute_query(
+        """
+        UPDATE cards
+        set card_order = %s
+        WHERE (id = %s)
+        """
+        , (new_order_number, card_id))
+
+
+# TODO works partially, add to Backlog for 2nd Sprint
+def update_cards_order(card_id, new_order_number, status_id, old_pos):
+    data_manager.execute_query(
+        """
+        UPDATE cards
+        set card_order = (card_order + 1)
+        WHERE card_order >= %s
+        AND id != %s
+        AND status_id = %s
+        AND card_order < %s
+        ;
+        """
+        , (new_order_number, card_id, status_id, old_pos))

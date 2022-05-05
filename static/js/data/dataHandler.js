@@ -58,6 +58,14 @@ export let dataHandler = {
                 new_status_id: newStatusId
             }
         return await apiPut(`/api/cards/${card_id}/update/${status_id}`, statusIdNew);
+    },
+    updateCardOrder: async function (card_id, new_order_id, status_id, old_pos) {
+        let newCardOrder =
+            {
+                new_order_number: new_order_id,
+                old_card_position: old_pos
+            }
+        return await apiPut(`/api/cards/${card_id}/update/${status_id}/card_order`, newCardOrder)
     }
 };
 
