@@ -42,6 +42,9 @@ export let dataHandler = {
             };
         return await apiPost('/api/statuses/create', status);
     },
+    delete_status: async function(statusId) {
+        return await fetch(`/api/statuses/delete/${statusId}`) ;
+    },
     updateBoardTitle: async function (boardTitle, boardId) {
         // changes title of board, saves it and calls the callback function with its data
         boardTitle = {title: boardTitle}
@@ -87,10 +90,8 @@ async function apiPut(url, payload) {
 }
 
 async function apiDelete(url) {
-    let response = await fetch(url, {
-        method: "GET",
-        headers: {"Content-Type": "application/json"},
-    });
+    let response = await fetch(url, {method: "DELETE"});
+    console.log(url)
     if (response.ok) {
         return console.log(response.ok);
     }
