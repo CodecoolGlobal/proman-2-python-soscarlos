@@ -72,6 +72,15 @@ def create_card(card, board_id):
          "status_id": card["status_id"],
          "card_order": card["card_order"]})
 
+
+def delete_card(card_id):
+    return data_manager.execute_query(
+        """
+        DELETE FROM cards
+        WHERE id = %(id)s
+        """,
+        {"id": card_id})
+
     
 def get_statuses():
     return data_manager.execute_select(

@@ -11,7 +11,9 @@ export let cardsManager = {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
             if (card.status_id === statusId) {
+
                 domManager.addChild(`.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
+
                 domManager.addEventListener(
                     `.card[data-card-id="${card.id}"]`,
                     "click",
@@ -25,6 +27,7 @@ export let cardsManager = {
         let addCardInput = document.createElement('input');
         let addCardInputButton = document.createElement('button');
         addCardInputButton.textContent = "Save card";
+
         e.target.appendChild(addCardInput);
         e.target.appendChild(addCardInputButton);
 
@@ -51,5 +54,9 @@ async function createCard(event) {
     await boardsManager.loadBoards();
 }
 
-function deleteButtonHandler(clickEvent) {
+async function deleteButtonHandler(e) {
+    const cardId = e.currentTarget.dataset.cardId;
+    await dataHandler.deleteCard(cardId);
+    util.clearRootContainer();
+    await boardsManager.loadBoards();
 }

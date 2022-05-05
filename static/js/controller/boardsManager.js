@@ -59,6 +59,7 @@ function showEditTitle(clickEvent) {
         inputs = document.getElementsByClassName('board-title-input'),
         textTitles = document.getElementsByClassName('board-title');
     for (let index = 0; index < inputs.length; index++) {
+
         let inputId = inputs[index].getAttribute('data-board-id'),
             titleId = textTitles[index].getAttribute('data-board-id');
 
@@ -86,7 +87,6 @@ function showHideHandler (textElement, inputElement, boardId, event) {
         inputElementId = inputElement.getAttribute('data-board-id');
         do {
           if(textElement === clickElement || clickElement === inputElement) {
-            console.log('click inside');
             return;
           }
           textElement.classList.remove('hidden');
@@ -134,7 +134,7 @@ function showNewStatusInput(e) {
 
 }
 
-function createNewStatus(e, boardId) {
+async function createNewStatus(e, boardId) {
     e.target.disabled = true;
     let columnTitleInput = document.createElement("input");
     let addBtn = document.createElement("button");
@@ -153,7 +153,9 @@ function createNewStatus(e, boardId) {
 
 async function addNewColumn(e, boardId) {
     let newStatusTitle = e.currentTarget.previousElementSibling.value;
-    await dataHandler.createNewStatus(newStatusTitle, boardId);
-    util.clearRootContainer();
-    await boardsManager.loadBoards()
+    if (newStatusTitle) {
+        await dataHandler.createNewStatus(newStatusTitle, boardId);
+        util.clearRootContainer();
+        await boardsManager.loadBoards()
+    }
 }

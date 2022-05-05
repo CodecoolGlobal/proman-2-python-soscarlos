@@ -85,8 +85,14 @@ def create_status():
     status = request.json
     title = status["title"]
     board_id = status["board_id"]
-    print(title, board_id)
     queries.create_status(title, board_id)
+
+    return redirect("/")
+
+
+@app.route("/api/cards/delete/<int:card_id>")
+def delete_card(card_id):
+    queries.delete_card(card_id)
 
     return redirect("/")
 
