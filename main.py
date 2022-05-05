@@ -36,6 +36,16 @@ def update_board(board_id: int):
     return render_template('index.html')
 
 
+@app.route("/api/statuses/<int:status_id>", methods=["PUT"])
+def update_status_title(status_id: int):
+    """
+    Update the specific status title according to its id
+    """
+    new_title = request.json
+    queries.edit_status_title(new_title, status_id)
+    return redirect("/")
+
+
 @app.route("/api/cards/<int:card_id>/update/<int:status_id>", methods=["PUT"])
 def update_status_id(card_id: int, status_id: int):
     """

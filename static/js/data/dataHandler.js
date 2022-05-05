@@ -23,10 +23,10 @@ export let dataHandler = {
         boardTitle = {title: boardTitle}
         return await apiPost("/api/boards/create", boardTitle);
     },
-    createNewCard: async function (cardTitle, boardId, statusId) {
+    createNewCard: async function (cardTitle, boardId, statusId, cardOrder) {
         let card = {"title": cardTitle,
                     "status_id": statusId,
-                    "card_order": 1};
+                    "card_order": cardOrder};
         return await apiPost( `/api/boards/${boardId}/cards/create`, card);
         // creates new card, saves it and calls the callback function with its data
     },
@@ -47,8 +47,9 @@ export let dataHandler = {
         boardTitle = {title: boardTitle}
         return await apiPut(`/api/boards/${boardId}`, boardTitle);
     },
-    updateStatusName: async function (statusName, boardId) {
-      return await apiPut("");
+    updateStatusName: async function (statusName, statusId) {
+        let columnTitle = {title: statusName};
+        return await apiPut(`/api/statuses/${statusId}`, columnTitle);
     },
     updateStatusId: async function (card_id, newStatusId, status_id) {
         let statusIdNew =
