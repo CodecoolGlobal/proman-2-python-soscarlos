@@ -57,7 +57,7 @@ async function createCard(event) {
     addButton.disabled = false;
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
-    // await initDragAndDrop();
+    await initDragAndDrop();
 }
 
 async function deleteButtonHandler(e) {
@@ -66,5 +66,5 @@ async function deleteButtonHandler(e) {
     await dataHandler.deleteCard(cardId);
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
-    // await initDragAndDrop();
+    await initDragAndDrop();
 }
