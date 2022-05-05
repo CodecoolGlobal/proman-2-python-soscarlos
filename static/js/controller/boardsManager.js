@@ -97,7 +97,6 @@ function showHideHandler (textElement, inputElement, boardId, event) {
               inputElement.classList.add('hidden');
           }
         } while (clickElement);
-        console.log("Clicked outside!");
 }
 
 function addCardHandler (event) {
@@ -118,6 +117,14 @@ export async function loadStatuses(boardId) {
                     "click",
                     showHideButtonHandler
                 );
+
+                domManager.addEventListener(
+                    `.board-column-title[data-status-id="${status.id}"]`,
+                    "click",
+                    util.showEdit
+
+                );
+
             }
     }
 }

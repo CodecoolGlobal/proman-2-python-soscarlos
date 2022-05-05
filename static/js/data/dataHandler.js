@@ -19,7 +19,6 @@ export let dataHandler = {
         // the card is retrieved and then the callback function is called with the card
     },
     createNewBoard: async function createBoard(boardTitle) {
-        // creates new board, saves it and calls the callback function with its data
         boardTitle = {title: boardTitle}
         return await apiPost("/api/boards/create", boardTitle);
     },
@@ -28,7 +27,6 @@ export let dataHandler = {
                     "status_id": statusId,
                     "card_order": cardOrder};
         return await apiPost( `/api/boards/${boardId}/cards/create`, card);
-        // creates new card, saves it and calls the callback function with its data
     },
     deleteCard: async function (cardId) {
         let id = {"id": cardId};
@@ -42,13 +40,17 @@ export let dataHandler = {
             };
         return await apiPost('/api/statuses/create', status);
     },
+    delete_status: async function(statusId) {
+        return await fetch(`/api/statuses/delete/${statusId}`) ;
+    },
     updateBoardTitle: async function (boardTitle, boardId) {
-        // changes title of board, saves it and calls the callback function with its data
+
         boardTitle = {title: boardTitle}
         return await apiPut(`/api/boards/${boardId}`, boardTitle);
     },
-    updateStatusName: async function (statusName, boardId) {
-      return await apiPut("");
+    updateStatusName: async function (statusName, statusId) {
+        let columnTitle = {title: statusName};
+        return await apiPut(`/api/statuses/${statusId}`, columnTitle);
     },
     updateStatusId: async function (card_id, newStatusId, status_id) {
         let statusIdNew =
@@ -94,10 +96,8 @@ async function apiPut(url, payload) {
 }
 
 async function apiDelete(url) {
-    let response = await fetch(url, {
-        method: "GET",
-        headers: {"Content-Type": "application/json"},
-    });
+    let response = await fetch(url, {method: "DELETE"});
+    console.log(url)
     if (response.ok) {
         return console.log(response.ok);
     }

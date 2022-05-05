@@ -41,8 +41,12 @@ function boardBuilder(board) {
 
 function cardBuilder(card, statusId) {
     return `<div class="card" data-card-id="${card.id}" data-status-id="${statusId}" draggable="true">
-                <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                <div class="card-remove" data-card-id="${card.id}"><i class="fas fa-trash-alt"></i></div>
+
                 <div class="card-title" data-card-id="${card.id}">${card.title}</div>
+            
+                <input class="card-title-input hidden" data-board-id="${card.id}" type="text" value="${card.title}"> 
+            
             </div>
             `;
 }
@@ -51,6 +55,9 @@ function columnBuilder(status, boardId) {
     return `
         <div class="board-column" data-status-id=${status.id}>
             <div class="board-column-title" data-status-id=${status.id}>${status.title}</div>
+            
+            <input class="column-title-input hidden" data-board-id="${status.id}" type="text" value="${status.title}">
+            
             <div class="board-column-content" data-status-id=${status.id} data-board-id="${boardId}"></div>
         </div>
     `;

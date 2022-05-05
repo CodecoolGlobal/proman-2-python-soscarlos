@@ -13,10 +13,11 @@ export let cardsManager = {
             const content = cardBuilder(card, statusId);
             if (card.status_id === statusId) {
 
-                domManager.addChild(`.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
+                domManager.addChild(
+                    `.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
 
                 domManager.addEventListener(
-                    `.card[data-card-id="${card.id}"]`,
+                    `.card-remove[data-card-id="${card.id}"]`,
                     "click",
                     deleteButtonHandler
                 );
@@ -61,7 +62,7 @@ async function createCard(event) {
 
 async function deleteButtonHandler(e) {
     const cardId = e.currentTarget.dataset.cardId;
-    const boardId = e.currentTarget.parentElement.dataset.boardId;
+    const boardId = e.currentTarget.parentElement.parentElement.dataset.boardId;
     await dataHandler.deleteCard(cardId);
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);

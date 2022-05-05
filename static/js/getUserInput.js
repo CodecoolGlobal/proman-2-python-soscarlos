@@ -20,7 +20,6 @@ export function createInputField() {
 
 }
 
-
 async function getUserInput(e) {
         let button = e.target;
         let inputField = button.previousElementSibling;
