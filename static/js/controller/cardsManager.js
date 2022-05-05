@@ -10,7 +10,7 @@ export let cardsManager = {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);
-            const content = cardBuilder(card);
+            const content = cardBuilder(card, statusId);
             if (card.status_id === statusId) {
 
                 domManager.addChild(
@@ -57,7 +57,7 @@ async function createCard(event) {
     addButton.disabled = false;
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
-    await initDragAndDrop();
+    // await initDragAndDrop();
 }
 
 async function deleteButtonHandler(e) {
@@ -66,5 +66,5 @@ async function deleteButtonHandler(e) {
     await dataHandler.deleteCard(cardId);
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
-    await initDragAndDrop();
+    // await initDragAndDrop();
 }
