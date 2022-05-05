@@ -1,6 +1,7 @@
 import {dataHandler} from "./data/dataHandler.js";
 import {boardsManager} from "./controller/boardsManager.js";
 import {util} from "./util/util.js";
+import {initDragAndDrop} from "./dragAndDrop.js";
 
 const inputBtn = document.querySelector("#show-input");
 const statuses = ["new", "in progress", "testing", "done"];
@@ -36,6 +37,7 @@ async function getUserInput(e) {
         }
         util.clearRootContainer();
         await boardsManager.loadBoards();
+        await initDragAndDrop();
 
         inputBtn.disabled = false;
 }

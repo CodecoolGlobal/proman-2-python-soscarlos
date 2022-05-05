@@ -3,6 +3,7 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {boardsManager} from "./boardsManager.js";
 import {util} from "../util/util.js";
+import {initDragAndDrop} from "../dragAndDrop.js";
 
 export let cardsManager = {
     loadCards: async function (boardId, statusId) {
@@ -50,13 +51,18 @@ async function createCard(event) {
     addInput.classList.toggle('hidden');
     const addButton = saveButton.parentElement;
     addButton.disabled = false;
-    util.clearRootContainer();
-    await boardsManager.loadBoards();
+    console.log(boardId);
+    util.clearColumnsContainer(boardId);
+    await boardsManager.loadStatuses(+boardId);
+    await initDragAndDrop();
 }
 
 async function deleteButtonHandler(e) {
     const cardId = e.currentTarget.dataset.cardId;
+    const boardId = e.currentTarget.parentElement.dataset.boardId;
+    console.log(boardId);
     await dataHandler.deleteCard(cardId);
-    util.clearRootContainer();
-    await boardsManager.loadBoards();
+    util.clearColumnsContainer(boardId);
+    await boardsManager.loadStatuses(+boardId);
+    await initDragAndDrop();
 }

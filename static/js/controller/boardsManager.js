@@ -4,6 +4,7 @@ import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 import {createInputField} from "../getUserInput.js";
 import {util} from "../util/util.js";
+import {initDragAndDrop} from "../dragAndDrop.js";
 
 export let boardsManager = {
     loadBoards: async function () {
@@ -105,7 +106,6 @@ function addCardHandler (event) {
 }
 
 export async function loadStatuses(boardId) {
-
     const statuses = await dataHandler.getStatuses();
     for (let status of statuses) {
             const columnBuilder = htmlFactory(htmlTemplates.status);
@@ -153,9 +153,14 @@ async function createNewStatus(e, boardId) {
 
 async function addNewColumn(e, boardId) {
     let newStatusTitle = e.currentTarget.previousElementSibling.value;
+    const btn = e.target;
+    const inputField = btn.previousElementSibling;
     if (newStatusTitle) {
+        btn.classList.toggle("hidden");
+        inputField.classList.toggle("hidden");
         await dataHandler.createNewStatus(newStatusTitle, boardId);
-        util.clearRootContainer();
-        await boardsManager.loadBoards()
+        util.clearColumnsContainer(boardId);
+        await boardsManager.loadStatuses(+boardId);
+        await initDragAndDrop();
     }
 }

@@ -13,5 +13,9 @@ export let util = {
               outerTarget.removeChild(btn);
               outerTarget.disabled = false;
           } console.log('we are OUT');
+    },
+    clearColumnsContainer: function (boardId) {
+        let container = document.querySelector(`.board-columns[data-board-id="${boardId}"]`);
+        container.innerHTML = "";
     }
 }
