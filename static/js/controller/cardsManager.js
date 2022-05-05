@@ -8,11 +8,9 @@ export let cardsManager = {
     loadCards: async function (boardId, statusId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
-            console.log(card.status_id, statusId)
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
             if (card.status_id === statusId) {
-                console.log(card);
                 domManager.addChild(`.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
                 domManager.addEventListener(
                     `.card[data-card-id="${card.id}"]`,

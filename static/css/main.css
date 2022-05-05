@@ -67,6 +67,7 @@ section.board{
 .board-columns{
     display: flex;
     flex-wrap: nowrap;
+    background-color: lightgray;
 }
 
 .board-column{
@@ -130,4 +131,9 @@ section.board{
 
 .hidden {
     display: none;
+}
+
+.active {
+    border-radius: 10px;
+    border-color: blue;
 }

@@ -61,6 +61,7 @@ function showEditTitle(clickEvent) {
     for (let index = 0; index < inputs.length; index++) {
         let inputId = inputs[index].getAttribute('data-board-id'),
             titleId = textTitles[index].getAttribute('data-board-id');
+
         if (inputId === boardId && titleId === boardId) {
             inputs[index].classList.remove('hidden');
             textTitles[index].classList.add('hidden');
