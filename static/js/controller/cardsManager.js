@@ -40,18 +40,20 @@ export let cardsManager = {
 };
 
 async function createCard(event) {
-    let saveButton = event.target,
-        addInput = saveButton.previousSibling,
-        cardName = addInput.value,
-        boardId = saveButton.parentElement.dataset.boardId;
+    let saveButton = event.target;
     const statusId =
         saveButton.parentElement.parentElement.nextElementSibling.firstElementChild.getAttribute("data-status-id");
-    await dataHandler.createNewCard(cardName, boardId, statusId);
+    let addInput = saveButton.previousSibling,
+        cardName = addInput.value,
+        boardId = saveButton.parentElement.dataset.boardId,
+        statusContainer = document.querySelector(`.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`),
+        cardsAmount = statusContainer.childElementCount,
+        cardOrder = cardsAmount + 1;
+    await dataHandler.createNewCard(cardName, boardId, statusId, cardOrder);
     saveButton.classList.toggle('hidden');
     addInput.classList.toggle('hidden');
     const addButton = saveButton.parentElement;
     addButton.disabled = false;
-    console.log(boardId);
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
     await initDragAndDrop();
@@ -61,8 +63,8 @@ async function deleteButtonHandler(e) {
     const cardId = e.currentTarget.dataset.cardId;
     const boardId = e.currentTarget.parentElement.dataset.boardId;
     console.log(boardId);
-    await dataHandler.deleteCard(cardId);
-    util.clearColumnsContainer(boardId);
-    await boardsManager.loadStatuses(+boardId);
-    await initDragAndDrop();
+    // await dataHandler.deleteCard(cardId);
+    // util.clearColumnsContainer(boardId);
+    // await boardsManager.loadStatuses(+boardId);
+    // await initDragAndDrop();
 }
