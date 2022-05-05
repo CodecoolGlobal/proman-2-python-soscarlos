@@ -20,15 +20,18 @@ export let cardsManager = {
             }
         }
     },
-    addCard: async function (event) {
-        event.target.disabled = true;
+    addCard: async function (e) {
+        e.target.disabled = true;
         let addCardInput = document.createElement('input');
         let addCardInputButton = document.createElement('button');
         addCardInputButton.textContent = "Save card";
-        event.target.appendChild(addCardInput);
-        event.target.appendChild(addCardInputButton);
-        addCardInputButton.addEventListener("click", createCard)
+        e.target.appendChild(addCardInput);
+        e.target.appendChild(addCardInputButton);
 
+        document.addEventListener("click",
+        (event) => util.clickOutsideHandler(addCardInputButton, addCardInput, e.target, event));
+
+        addCardInputButton.addEventListener("click", createCard)
     }
 };
 

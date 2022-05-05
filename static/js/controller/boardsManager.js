@@ -54,43 +54,49 @@ function showTitleInput() {
 
 function showEditTitle(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    let textElement = clickEvent.target;
-    let inputElement = textElement.nextSibling.nextSibling;
-    let inputs = document.getElementsByClassName('board-title-input');
-    let textTitles = document.getElementsByClassName('board-title');
+    let textElement = clickEvent.target,
+        inputElement = textElement.nextSibling.nextSibling,
+        inputs = document.getElementsByClassName('board-title-input'),
+        textTitles = document.getElementsByClassName('board-title');
     for (let index = 0; index < inputs.length; index++) {
-        let inputId = inputs[index].getAttribute('data-board-id');
-        let titleId = textTitles[index].getAttribute('data-board-id');
+        let inputId = inputs[index].getAttribute('data-board-id'),
+            titleId = textTitles[index].getAttribute('data-board-id');
+
         if (inputId === boardId && titleId === boardId) {
-            inputs[index].style.display = 'inline-block'; // consider change the display to show inline
-            textTitles[index].style.display = 'none';
+            inputs[index].classList.remove('hidden');
+            textTitles[index].classList.add('hidden');
         }
     }
-    document.addEventListener("click", function(event) {
-           let clickElement =   event.target;
-        do {
-          if(textElement === clickElement || clickElement === inputElement) {
-            console.log('click inside');
-            return;
-          }
-          textElement.style.display = 'inline-block'; // consider change the display to show inline
-          let inputElementId = inputElement.getAttribute('data-board-id');
-          clickElement = clickElement.parentNode;
-          if (inputElementId === boardId) {
-              inputElement.style.display = 'none';
-          }
-        } while (clickElement);
-        console.log("Clicked outside!");
-      });
+    document.addEventListener("click",
+        (event) => showHideHandler(textElement, inputElement, boardId, event));
+
     inputElement.addEventListener('keypress', async function (event) {
     if (event.key === 'Enter') {
       let newTitle = inputElement.value;
       textElement.innerText = newTitle;
       await dataHandler.updateBoardTitle(newTitle, boardId);
-      inputElement.style.display = 'none';
-      textElement.style.display = 'inline-block'; // consider change the display to show inline
+      inputElement.classList.add('hidden');
+      textElement.classList.remove('hidden');
         }
     });
+}
+
+function showHideHandler (textElement, inputElement, boardId, event) {
+    let clickElement = event.target,
+        inputElementId = inputElement.getAttribute('data-board-id');
+        do {
+          if(textElement === clickElement || clickElement === inputElement) {
+            console.log('click inside');
+            return;
+          }
+          textElement.classList.remove('hidden');
+
+          clickElement = clickElement.parentNode;
+          if (inputElementId === boardId) {
+              inputElement.classList.add('hidden');
+          }
+        } while (clickElement);
+        console.log("Clicked outside!");
 }
 
 function addCardHandler (event) {
@@ -120,6 +126,7 @@ function showNewStatusInput(e) {
     const board = e.currentTarget.parentElement.parentElement;
     const boardId = board.dataset.boardId;
     const newColumnBtn = board.querySelector("#add-column");
+
     newColumnBtn.addEventListener("click", function (e) {
         createNewStatus(e, boardId);
     });
@@ -132,8 +139,13 @@ function createNewStatus(e, boardId) {
     let columnTitleInput = document.createElement("input");
     let addBtn = document.createElement("button");
     addBtn.textContent = "Add Status"
+    columnTitleInput.setAttribute('class', 'colTitleInput');
     e.target.appendChild(columnTitleInput);
     e.target.appendChild(addBtn);
+
+    document.addEventListener("click",
+        (event) => util.clickOutsideHandler(addBtn, columnTitleInput, e.target, event));
+
     addBtn.addEventListener("click", function(e) {
         addNewColumn(e, boardId);
     });
