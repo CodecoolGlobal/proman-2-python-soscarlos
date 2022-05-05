@@ -140,3 +140,8 @@ input.board-title-input {
 .hidden {
     display: none;
 }
+
+.active {
+    border-radius: 10px;
+    border-color: blue;
+}

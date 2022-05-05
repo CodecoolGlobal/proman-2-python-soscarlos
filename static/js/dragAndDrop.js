@@ -58,6 +58,7 @@ function handleDragStart(e) {
     this.classList.add('dragged');
     // ui.mixedCardsContainer.classList.toggle('active');
     currentCard.dragged = e.currentTarget;
+    // this.classList.add(".active");
     const currentColumn = currentCard.dragged.parentElement;
     const currentColumnId = currentColumn.getAttribute("data-status-id");
     currentCard.statusId = currentColumnId;
@@ -67,12 +68,12 @@ function handleDragStart(e) {
 function handleDragEnd() {
     // highlightCardSlots(false);
     this.classList.remove('dragged');
-    // ui.mixedCardsContainer.classList.toggle('active');
     const cardId = currentCard.dragged.getAttribute("data-card-id");
     const newColumn = currentCard.dragged.parentElement;
     const newColumnId = newColumn.getAttribute("data-status-id");
     dataHandler.updateStatusId(cardId, newColumnId, currentCard.statusId);
     console.log("Drag end of", currentCard.dragged);
+    // this.classList.remove(".active");
     currentCard.dragged = null;
     currentCard.statusId = null;
 }
@@ -83,23 +84,10 @@ function handleDragOver(e) {
 
 function handleDragEnter(e) {
     console.log("Drag enter of", e.currentTarget);
-    // if (this.classList.contains('mixed-cards')) {
-    //     this.classList.toggle('on-top');
-    // } else if (checkSlot(e)) {
-    //     this.classList.add('over-correct-zone');
-    // } else {
-    //     this.classList.add('over-incorrect-zone');
-    // }
 }
 
 function handleDragLeave(e) {
     console.log("Drag leave of", e.currentTarget);
-    // if (this.classList.contains('mixed-cards')) {
-    //     this.classList.toggle('on-top');
-    // } else {
-    //     this.classList.remove('over-correct-zone');
-    //     this.classList.remove('over-incorrect-zone');
-    // }
 }
 
 function handleDrop(e) {
