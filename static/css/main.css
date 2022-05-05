@@ -137,3 +137,7 @@ section.board{
 .card.dragging {
     opacity: .5;
 }
+
+#show-input {
+    font-size: 24px;
+}
