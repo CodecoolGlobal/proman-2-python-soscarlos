@@ -54,11 +54,10 @@ function initDropzone(dropzone) {
 }
 
 function handleDragStart(e) {
-    // highlightCardSlots();
+
     this.classList.add('dragged');
-    // ui.mixedCardsContainer.classList.toggle('active');
     currentCard.dragged = e.currentTarget;
-    // this.classList.add(".active");
+
     const currentColumn = currentCard.dragged.parentElement;
     const currentColumnId = currentColumn.getAttribute("data-status-id");
     currentCard.statusId = currentColumnId;
@@ -66,14 +65,14 @@ function handleDragStart(e) {
 }
 
 function handleDragEnd() {
-    // highlightCardSlots(false);
+
     this.classList.remove('dragged');
     const cardId = currentCard.dragged.getAttribute("data-card-id");
     const newColumn = currentCard.dragged.parentElement;
     const newColumnId = newColumn.getAttribute("data-status-id");
     dataHandler.updateStatusId(cardId, newColumnId, currentCard.statusId);
     console.log("Drag end of", currentCard.dragged);
-    // this.classList.remove(".active");
+
     currentCard.dragged = null;
     currentCard.statusId = null;
 }

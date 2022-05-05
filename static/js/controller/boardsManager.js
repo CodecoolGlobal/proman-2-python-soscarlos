@@ -117,7 +117,7 @@ export async function loadStatuses(boardId) {
                     "click",
                     showHideButtonHandler
                 );
-                // let columns = document.querySelector(`.board-column-title[data-status-id="${status.id}"]`);
+
                 domManager.addEventListener(
                     `.board-column-title[data-status-id="${status.id}"]`,
                     "click",

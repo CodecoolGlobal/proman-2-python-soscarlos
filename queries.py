@@ -27,6 +27,7 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        ORDER BY id ASC
         ;
         """
     )
@@ -74,7 +75,7 @@ def create_card(card, board_id):
 
 
 def delete_card(card_id):
-    return data_manager.execute_query(
+    data_manager.execute_query(
         """
         DELETE FROM cards
         WHERE id = %(id)s

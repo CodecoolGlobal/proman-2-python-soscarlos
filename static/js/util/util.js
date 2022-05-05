@@ -20,11 +20,10 @@ export let util = {
           if(clickElement !== btn &&
             clickElement !== input &&
           clickElement !== outerTarget) {
-              console.log('we are inside');
               outerTarget.removeChild(input);
               outerTarget.removeChild(btn);
               outerTarget.disabled = false;
-          } console.log('we are OUT');
+          }
     },
     clickOutsideTitle: function (textElement, inputElement, event) {
     let clickItem = event.target;
@@ -32,7 +31,7 @@ export let util = {
             clickItem !== inputElement) {
               textElement.classList.remove('hidden');
               inputElement.classList.add('hidden');
-          } console.log('we are OUT');
+          }
     },
     updateTitle: async function (textElement, inputElement, event) {
     if (event.key === 'Enter') {
