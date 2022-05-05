@@ -50,14 +50,6 @@ section.board{
     border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
-input.board-title-input {
-    display: none;
-}
-
-.board-title.hidden {
-    display: none;
-}
-
 .board-title{
     margin: 13px;
     display: inline-block;
@@ -75,6 +67,7 @@ input.board-title-input {
 .board-columns{
     display: flex;
     flex-wrap: nowrap;
+    background-color: lightgray;
 }
 
 .board-column{
@@ -138,4 +131,9 @@ input.board-title-input {
 
 .hidden {
     display: none;
+}
+
+.active {
+    border-radius: 10px;
+    border-color: blue;
 }

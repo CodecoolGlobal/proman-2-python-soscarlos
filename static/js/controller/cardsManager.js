@@ -11,8 +11,9 @@ export let cardsManager = {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
             if (card.status_id === statusId) {
-                domManager.addChild(
-                    `.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
+
+                domManager.addChild(`.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
+
                 domManager.addEventListener(
                     `.card[data-card-id="${card.id}"]`,
                     "click",
@@ -21,13 +22,18 @@ export let cardsManager = {
             }
         }
     },
-    addCard: async function (event) {
-        event.target.disabled = true;
+    addCard: async function (e) {
+        e.target.disabled = true;
         let addCardInput = document.createElement('input');
         let addCardInputButton = document.createElement('button');
         addCardInputButton.textContent = "Save card";
-        event.target.appendChild(addCardInput);
-        event.target.appendChild(addCardInputButton);
+
+        e.target.appendChild(addCardInput);
+        e.target.appendChild(addCardInputButton);
+
+        document.addEventListener("click",
+        (event) => util.clickOutsideHandler(addCardInputButton, addCardInput, e.target, event));
+
         addCardInputButton.addEventListener("click", createCard)
     }
 };

@@ -91,7 +91,7 @@ def get_statuses():
 
 
 def create_status(title, board_id):
-    return data_manager.execute_query(
+    data_manager.execute_query(
         """
         INSERT INTO statuses (title, board_id)
         VALUES (%(title)s, %(board_id)s)
@@ -100,3 +100,13 @@ def create_status(title, board_id):
          "board_id": board_id
          }
     )
+
+
+def update_status_id(new_status_id, card_id, status_id):
+    data_manager.execute_query(
+        """
+        UPDATE cards
+        set status_id = %s
+        WHERE (id = %s AND status_id = %s);
+        """
+        , (new_status_id, card_id, status_id))
