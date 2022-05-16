@@ -110,6 +110,14 @@ def create_status():
     return redirect("/")
 
 
+@app.route("/api/cards/<int:card_id>/update", methods=["PUT"])
+def update_card_name(card_id: int):
+    new_card_name = request.json
+    queries.update_card_name(card_id, new_card_name)
+
+    return render_template('index.html')
+
+
 @app.route("/api/cards/delete/<int:card_id>", methods=["DELETE"])
 def delete_card(card_id):
     queries.delete_card(card_id)

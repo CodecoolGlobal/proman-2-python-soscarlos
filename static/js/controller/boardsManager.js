@@ -67,6 +67,8 @@ function showEditTitle(clickEvent) {
         if (inputId === boardId && titleId === boardId) {
             inputs[index].classList.remove('hidden');
             textTitles[index].classList.add('hidden');
+            inputs[index].focus();
+            inputs[index].select();
         }
     }
     document.addEventListener("click",

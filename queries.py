@@ -145,3 +145,15 @@ def update_cards_order(card_id, new_order_number, status_id, old_pos):
         ;
         """
         , (new_order_number, card_id, status_id, old_pos))
+
+
+def update_card_name(card_id, new_card_name):
+    return data_manager.execute_query(
+        """
+        UPDATE cards
+        set title = %(new_card_name)s
+        WHERE id = %(card_id)s;
+        """, {"new_card_name": new_card_name["title"],
+              "card_id": card_id
+              }
+    )
