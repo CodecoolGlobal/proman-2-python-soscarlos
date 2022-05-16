@@ -25,20 +25,36 @@ DROP TABLE IF EXISTS cards;
 --- create tables
 ---
 
-CREATE TABLE statuses (
-    id       SERIAL PRIMARY KEY     NOT NULL,
-    title    VARCHAR(200)           NOT NULL
-);
-
 CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     title       VARCHAR(200)        NOT NULL
 );
 
+
 CREATE TABLE cards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     board_id    INTEGER             NOT NULL,
+    status_id   INTEGER             NOT NULL,);
+
+
+CREATE TABLE statuses (
+    id       SERIAL PRIMARY KEY     NOT NULL,
+    title    VARCHAR(200)           NOT NULL,
+    board_id INT
+    , CONSTRAINT fk_board_id FOREIGN KEY (board_id)
+    REFERENCES boards(id)
+    ON DELETE CASCADE
+
+);
+
+CREATE TABLE cards (
+    id          SERIAL PRIMARY KEY  NOT NULL,
+    board_id    INTEGER             NOT NULL,
+    CONSTRAINT fk_boards FOREIGN KEY (board_id)
+    REFERENCES boards (id),
     status_id   INTEGER             NOT NULL,
+    CONSTRAINT fk_status FOREIGN KEY (status_id)
+    REFERENCES statuses (id),
     title       VARCHAR (200)       NOT NULL,
     card_order  INTEGER             NOT NULL
 );
@@ -46,14 +62,6 @@ CREATE TABLE cards (
 ---
 --- insert data
 ---
-
-INSERT INTO statuses(title) VALUES ('new');
-INSERT INTO statuses(title) VALUES ('in progress');
-INSERT INTO statuses(title) VALUES ('testing');
-INSERT INTO statuses(title) VALUES ('done');
-
-INSERT INTO boards(title) VALUES ('Board 1');
-INSERT INTO boards(title) VALUES ('Board 2');
 
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 1', 1);
 INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 2', 2);

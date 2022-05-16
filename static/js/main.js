@@ -1,12 +1,11 @@
-import { dom } from "./dom.js";
+import {boardsManager} from "./controller/boardsManager.js";
+import {initDragAndDrop} from "./dragAndDrop.js";
 
-// This function is to initialize the application
-function init() {
-    // init data
-    dom.init();
-    // loads the boards to the screen
-    dom.loadBoards();
-
+async function init() {
+    await boardsManager.loadBoards();
+    await boardsManager.showInput();
+    await initDragAndDrop();
 }
 
 init();
+

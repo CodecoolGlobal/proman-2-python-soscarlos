@@ -33,7 +33,6 @@ def get_connection_data(db_name=None):
     """
     if db_name is None:
         db_name = os.environ.get('MY_PSQL_DBNAME')
-
     return {
         'dbname': db_name,
         'user': os.environ.get('MY_PSQL_USER'),
@@ -58,3 +57,8 @@ def execute_select(statement, variables=None, fetchall=True):
             result_set = cursor.fetchall() if fetchall else cursor.fetchone()
     return result_set
 
+
+def execute_query(statement, variables=None):
+    with establish_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
+            cursor.execute(statement, variables)
