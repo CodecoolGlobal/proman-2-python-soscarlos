@@ -125,6 +125,13 @@ def delete_card(card_id):
     return make_response("201")
 
 
+@app.route("/api/statuses/delete/<int:status_id>", methods=["DELETE"])
+def delete_status(status_id):
+    queries.delete_status(status_id)
+
+    return make_response("201")
+
+
 def main():
     app.run(debug=True)
 
