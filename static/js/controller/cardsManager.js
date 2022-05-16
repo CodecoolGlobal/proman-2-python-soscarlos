@@ -21,6 +21,12 @@ export let cardsManager = {
                     "click",
                     deleteButtonHandler
                 );
+
+                domManager.addEventListener(
+                    `.card-title[data-card-id="${card.id}"]`,
+                    "click",
+                    showCardInput
+                );
             }
         }
     },
@@ -67,4 +73,54 @@ async function deleteButtonHandler(e) {
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
     await initDragAndDrop();
+}
+
+function showCardInput(e) {
+    let textElement = e.target,
+        inputElement = e.target.nextElementSibling;
+    inputElement.classList.toggle('hidden');
+    textElement.classList.toggle('hidden');
+    inputElement.focus();
+    inputElement.select();
+    document.addEventListener(
+        "click",
+        (event) => clickOutsideCard(textElement, inputElement, event)
+    );
+    inputElement.addEventListener(
+        "keydown",
+        (event) => escape(inputElement, textElement, event)
+    );
+    inputElement.addEventListener(
+        "keypress",
+         async (event) => updateCardTitle(inputElement, textElement, event)
+    );
+}
+
+function clickOutsideCard(text, input, event) {
+    let eventTarget = event.target;
+    if (eventTarget !== text &&
+        eventTarget !== input) {
+        text.classList.remove('hidden');
+        input.classList.add('hidden');
+    }
+}
+
+function escape(input, text, event) {
+    if (event.key === "Escape") {
+        text.classList.remove('hidden');
+        input.classList.add('hidden');
+    }
+}
+
+async function updateCardTitle(input, text, event) {
+    let newTitle = input.value;
+    let cardId = text.dataset.cardId;
+    console.log(cardId);
+    if (event.key === 'Enter') {
+    text.innerHTML = newTitle;
+    await dataHandler.updateCardName(cardId, newTitle);
+    input.classList.add('hidden');
+    text.classList.remove('hidden');
+    }
+
 }
