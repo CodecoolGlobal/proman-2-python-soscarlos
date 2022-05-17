@@ -157,3 +157,11 @@ def update_card_name(card_id, new_card_name):
               "card_id": card_id
               }
     )
+
+
+def delete_status(status_id):
+    return data_manager.execute_query(
+        """
+        DELETE FROM statuses
+        WHERE id = %(status_id)s        
+        """, {"status_id": status_id})

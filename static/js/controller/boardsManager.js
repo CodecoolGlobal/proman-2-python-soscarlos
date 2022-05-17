@@ -127,6 +127,11 @@ export async function loadStatuses(boardId) {
 
                 );
 
+                domManager.addEventListener(
+                    `.column-remove[data-status-id="${status.id}"]`,
+                    "click",
+                    async () => deleteStatusHandler(boardId, status.id)
+                );
             }
     }
 }
@@ -172,4 +177,19 @@ async function addNewColumn(e, boardId) {
         await boardsManager.loadStatuses(+boardId);
         await initDragAndDrop();
     }
+}
+
+async function deleteStatusHandler(boardId, statusId) {
+    let columnContent = document.querySelector(`.board-column-content[data-status-id="${statusId}"]`);
+    if (columnContent.hasChildNodes()) {
+        let cards = columnContent.children;
+        for (let card of cards) {
+            let cardId = card.dataset.cardId;
+            await dataHandler.deleteCard(cardId);
+        }
+    }
+    await dataHandler.deleteStatus(statusId);
+    util.clearColumnsContainer(boardId);
+    await boardsManager.loadStatuses(+boardId);
+    await initDragAndDrop();
 }

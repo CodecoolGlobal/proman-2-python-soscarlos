@@ -29,8 +29,7 @@ export let dataHandler = {
         return await apiPost( `/api/boards/${boardId}/cards/create`, card);
     },
     deleteCard: async function (cardId) {
-        let id = {"id": cardId};
-      return   await apiDelete(`/api/cards/delete/${cardId}`, id);
+      return   await apiDelete(`/api/cards/delete/${cardId}`);
     },
     createNewStatus: async function (statusTitle, boardId) {
         let status =
@@ -40,8 +39,8 @@ export let dataHandler = {
             };
         return await apiPost('/api/statuses/create', status);
     },
-    delete_status: async function(statusId) {
-        return await fetch(`/api/statuses/delete/${statusId}`) ;
+    deleteStatus: async function(statusId) {
+        return await apiDelete(`/api/statuses/delete/${statusId}`) ;
     },
     updateBoardTitle: async function (boardTitle, boardId) {
 
@@ -64,7 +63,6 @@ export let dataHandler = {
         return await apiPut(`/api/cards/${cardId}/update`, newCardName);
 
     },
-
     updateCardOrder: async function (card_id, new_order_id, status_id, old_pos) {
         let newCardOrder =
             {
@@ -111,7 +109,7 @@ async function apiPut(url, payload) {
 
 async function apiDelete(url) {
     let response = await fetch(url, {method: "DELETE"});
-    console.log(url)
+    console.log(url);
     if (response.ok) {
         return console.log(response.ok);
     }
