@@ -78,12 +78,14 @@ def get_cards_for_board(board_id: int):
 
 
 @app.route("/api/boards/create", methods=["POST"])
+@json_response
 def create_board():
     board = request.json
     board_title = board["title"]
-    queries.create_board(board_title)
+    board_id = queries.create_board(board_title)
+    print(board_id)
 
-    return render_template("index.html")
+    return board_id
 
 
 @app.route("/api/boards/<int:board_id>/cards/create", methods=["POST"])
@@ -128,6 +130,13 @@ def delete_card(card_id):
 @app.route("/api/statuses/delete/<int:status_id>", methods=["DELETE"])
 def delete_status(status_id):
     queries.delete_status(status_id)
+
+    return make_response("201")
+
+
+@app.route("/api/boards/delete/<int:board_id>", methods=["DELETE"])
+def delete_board(board_id):
+    queries.delete_board(board_id)
 
     return make_response("201")
 
