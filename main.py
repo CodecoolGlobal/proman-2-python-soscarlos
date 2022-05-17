@@ -120,6 +120,14 @@ def update_card_name(card_id: int):
     return render_template('index.html')
 
 
+@app.route("/api/cards/<int:card_id>/update/archived", methods=["PUT"])
+def update_archived_status(card_id: int):
+    new_archived_status = request.json
+    queries.update_archived(card_id, new_archived_status)
+
+    return render_template('index.html')
+
+
 @app.route("/api/cards/delete/<int:card_id>", methods=["DELETE"])
 def delete_card(card_id):
     queries.delete_card(card_id)
