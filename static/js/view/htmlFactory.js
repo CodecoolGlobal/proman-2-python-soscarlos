@@ -26,6 +26,7 @@ function boardBuilder(board) {
 
     return `
             <div class="board" data-board-id=${board.id}><br>
+                <div class="board-remove" data-board-id="${board.id}"><i class="fas fa-trash-alt"></i></div>
                 <div class="board-header" data-board-id="${board.id}">
                       <span class="board-title" data-board-id="${board.id}">${board.title}</span>
                       <input class="board-title-input hidden" data-board-id="${board.id}" type="text" value="${board.title}">

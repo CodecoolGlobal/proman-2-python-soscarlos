@@ -25,12 +25,12 @@ async function getUserInput(e) {
         let inputField = button.previousElementSibling;
         let userInput = inputField.value;
         deleteInputDiv();
-        await dataHandler.createNewBoard(userInput);
-        let boards = document.querySelectorAll(".board");
+
+        let newBoard = await dataHandler.createNewBoard(userInput);
         for (let i=0; i < statuses.length; i++){
                 let title = statuses[i];
-                let boardId = boards.length + 1;
-                await dataHandler.createNewStatus(title, boardId);
+                let boardId = newBoard.id;
+                dataHandler.createNewStatus(title, boardId);
         }
         util.clearRootContainer();
         await boardsManager.loadBoards();

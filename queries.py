@@ -47,13 +47,15 @@ def get_cards_for_board(board_id):
 
 
 def create_board(title):
-    data_manager.execute_query(
+    board_id = data_manager.execute_select(
         """
         INSERT INTO boards (title)
-        VALUES (%(title)s);
+        VALUES (%(title)s)
+        RETURNING id;
         """,
-        {"title": title}
+        {"title": title}, False
     )
+    return board_id
 
 
 def edit_title(board, board_id):
@@ -67,7 +69,8 @@ def edit_title(board, board_id):
 def create_card(card, board_id):
     data_manager.execute_query(
         """INSERT INTO cards (board_id, status_id, title, card_order)
-        VALUES (%(board_id)s, %(status_id)s, %(title)s, %(card_order)s)""",
+        VALUES (%(board_id)s, %(status_id)s, %(title)s, %(card_order)s)
+        """,
         {"title": card["title"],
          "board_id": board_id,
          "status_id": card["status_id"],
@@ -175,3 +178,11 @@ def update_archived(card_id, new_archived_status):
         WHERE id = %(card_id)s
         """, {"new_archived_status": new_archived_status["archived"],
               "card_id": card_id})
+
+  
+def delete_board(board_id):
+    return data_manager.execute_query(
+        """
+        DELETE FROM boards
+        WHERE id = %(b_id)s
+        """, {"b_id": board_id})

@@ -20,7 +20,10 @@ export let dataHandler = {
     },
     createNewBoard: async function createBoard(boardTitle) {
         boardTitle = {title: boardTitle}
-        return await apiPost("/api/boards/create", boardTitle);
+        return await apiPost2("/api/boards/create", boardTitle);
+    },
+    deleteBoards: async function(boardId) {
+        return await apiDelete(`/api/boards/delete/${boardId}`);
     },
     createNewCard: async function (cardTitle, boardId, statusId, cardOrder) {
         let card = {"title": cardTitle,
@@ -40,7 +43,7 @@ export let dataHandler = {
         return await apiPost('/api/statuses/create', status);
     },
     deleteStatus: async function(statusId) {
-        return await apiDelete(`/api/statuses/delete/${statusId}`) ;
+        return await apiDelete(`/api/statuses/delete/${statusId}`);
     },
     updateBoardTitle: async function (boardTitle, boardId) {
 
@@ -86,6 +89,20 @@ async function apiGet(url) {
     }
 }
 
+async function apiPost2(url, payload) {
+
+    let response = await fetch(url, {
+        method: "POST",
+        headers: {
+             "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+    if (response.ok) {
+        return await response.json();
+    }
+}
+
 async function apiPost(url, payload) {
 
     let response = await fetch(url, {
@@ -96,7 +113,7 @@ async function apiPost(url, payload) {
         body: JSON.stringify(payload)
     });
     if (response.ok) {
-        return console.log(response.ok);
+        console.log(response.ok);
     }
 }
 
