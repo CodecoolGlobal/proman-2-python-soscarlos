@@ -1,0 +1,20 @@
+{
+  "name": "Proman 2",
+  "short-name": "Proman 2",
+  "start-url": ".",
+  "serviceworker": {
+    "src": "service-worker.js",
+    "scope": "/",
+    "update_via_cache": "none"
+  },
+  "display": "standalone",
+  "background-color": "#FFFFE0",
+  "description": "Better than Trello",
+  "icons": [
+    {
+      "src": "/static/favicon/icon.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ]
+}
