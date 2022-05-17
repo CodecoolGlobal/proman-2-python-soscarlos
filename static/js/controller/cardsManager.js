@@ -9,24 +9,48 @@ export let cardsManager = {
     loadCards: async function (boardId, statusId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
-            const cardBuilder = htmlFactory(htmlTemplates.card);
-            const content = cardBuilder(card, statusId);
-            if (card.status_id === statusId) {
+            if (!card.archived) {
+                const cardBuilder = htmlFactory(htmlTemplates.card);
+                const content = cardBuilder(card, statusId);
+                if (card.status_id === statusId) {
 
-                domManager.addChild(
-                    `.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`, content);
+                    domManager.addChild(
+                    `.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`,
+                        content
+                    );
 
-                domManager.addEventListener(
+                    domManager.addEventListener(
+                        `.card-archive[data-card-id="${card.id}"]`,
+                        "click",
+                        async (event) => archiveButtonHandler(boardId, card.archived, event)
+                    );
+
+                    domManager.addEventListener(
                     `.card-remove[data-card-id="${card.id}"]`,
                     "click",
                     deleteButtonHandler
-                );
+                    );
 
-                domManager.addEventListener(
+                    domManager.addEventListener(
                     `.card-title[data-card-id="${card.id}"]`,
                     "click",
                     showCardInput
-                );
+                    );
+                }
+            } else {
+                const cardBuilder = htmlFactory(htmlTemplates.card);
+                const content = cardBuilder(card, statusId);
+                if (card.status_id === statusId) {
+                    domManager.addChild(
+                    "#modal-content",
+                                 content
+                    );
+                    domManager.addEventListener(
+                        `.card-archive[data-card-id="${card.id}"]`,
+                        "click",
+                        async (event) => archiveButtonHandler(boardId, card.archived, event)
+                    );
+                }
             }
         }
     },
@@ -70,6 +94,14 @@ async function deleteButtonHandler(e) {
     const cardId = e.currentTarget.dataset.cardId;
     const boardId = e.currentTarget.parentElement.parentElement.dataset.boardId;
     await dataHandler.deleteCard(cardId);
+    util.clearColumnsContainer(boardId);
+    await boardsManager.loadStatuses(+boardId);
+    await initDragAndDrop();
+}
+
+async function archiveButtonHandler(boardId, cardArchived, event) {
+    let cardId = event.currentTarget.dataset.cardId;
+    await dataHandler.updateArchivedStatus(cardId, cardArchived);
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
     await initDragAndDrop();
@@ -122,5 +154,4 @@ async function updateCardTitle(input, text, event) {
     input.classList.add('hidden');
     text.classList.remove('hidden');
     }
-
 }

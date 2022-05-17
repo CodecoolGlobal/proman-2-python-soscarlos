@@ -70,6 +70,10 @@ export let dataHandler = {
                 old_card_position: old_pos
             }
         return await apiPut(`/api/cards/${card_id}/update/${status_id}/card_order`, newCardOrder)
+    },
+    updateArchivedStatus: async function (cardId, cardArchived) {
+        let newArchivedStatus = {archived: !cardArchived};
+        return await apiPut(`/api/cards/${cardId}/update/archived`, newArchivedStatus)
     }
 };
 

@@ -15,7 +15,6 @@ export let boardsManager = {
             domManager.addChild("#root", content);
 
             await this.loadStatuses(board.id);
-
             domManager.addEventListener(
                 `.board-add[data-board-id="${board.id}"]`,
                 "click",
@@ -35,7 +34,6 @@ export let boardsManager = {
     loadStatuses: loadStatuses,
 
     showInput: showTitleInput,
-
 };
 
 function showHideButtonHandler(e) {

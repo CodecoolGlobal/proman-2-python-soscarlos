@@ -24,9 +24,7 @@ async function getUserInput(e) {
         let button = e.target;
         let inputField = button.previousElementSibling;
         let userInput = inputField.value;
-
         deleteInputDiv();
-
         await dataHandler.createNewBoard(userInput);
         let boards = document.querySelectorAll(".board");
         for (let i=0; i < statuses.length; i++){

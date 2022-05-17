@@ -4,3 +4,6 @@ ALTER TABLE ONLY statuses
 ALTER TABLE ONLY statuses
     ADD CONSTRAINT fk_statuses_status_id FOREIGN KEY (board_id)
         REFERENCES boards(id);
+
+ALTER TABLE ONLY cards
+    ADD COLUMN archived BOOLEAN DEFAULT FALSE;

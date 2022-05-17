@@ -165,3 +165,13 @@ def delete_status(status_id):
         DELETE FROM statuses
         WHERE id = %(status_id)s        
         """, {"status_id": status_id})
+
+
+def update_archived(card_id, new_archived_status):
+    return data_manager.execute_query(
+        """
+        UPDATE cards
+        SET archived = %(new_archived_status)s
+        WHERE id = %(card_id)s
+        """, {"new_archived_status": new_archived_status["archived"],
+              "card_id": card_id})
