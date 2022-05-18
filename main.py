@@ -26,6 +26,15 @@ def get_boards():
     return queries.get_boards()
 
 
+@app.route("/api/cards")
+@json_response
+def get_all_cards():
+    """
+    All the cards
+    """
+    return queries.get_cards()
+
+
 @app.route("/api/boards/<int:board_id>", methods=["PUT"])
 def update_board(board_id: int):
     """

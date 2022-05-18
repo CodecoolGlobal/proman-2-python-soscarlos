@@ -1,19 +1,19 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
-import {boardsManager} from "./boardsManager.js";
+import {boardsManager, fillArchiveList} from "./boardsManager.js";
 import {util} from "../util/util.js";
 import {initDragAndDrop} from "../dragAndDrop.js";
 
 export let cardsManager = {
     loadCards: async function (boardId, statusId) {
+        const archiveContent = document.getElementById("archive-content");
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
             if (!card.archived) {
                 const cardBuilder = htmlFactory(htmlTemplates.card);
                 const content = cardBuilder(card, statusId);
                 if (card.status_id === statusId) {
-
                     domManager.addChild(
                     `.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`,
                         content
@@ -22,7 +22,7 @@ export let cardsManager = {
                     domManager.addEventListener(
                         `.card-archive[data-card-id="${card.id}"]`,
                         "click",
-                        async (event) => archiveButtonHandler(boardId, card.archived, event)
+                        async (event) => archiveButtonHandler(boardId, card.archived, archiveContent, event)
                     );
 
                     domManager.addEventListener(
@@ -37,22 +37,9 @@ export let cardsManager = {
                     showCardInput
                     );
                 }
-            } else {
-                const cardBuilder = htmlFactory(htmlTemplates.card);
-                const content = cardBuilder(card, statusId);
-                if (card.status_id === statusId) {
-                    domManager.addChild(
-                    "#modal-content",
-                                 content
-                    );
-                    domManager.addEventListener(
-                        `.card-archive[data-card-id="${card.id}"]`,
-                        "click",
-                        async (event) => archiveButtonHandler(boardId, card.archived, event)
-                    );
-                }
             }
         }
+        // this.loadArchiveList(cards, boardId, archiveContent);
     },
     addCard: async function (e) {
         e.target.disabled = true;
@@ -67,7 +54,18 @@ export let cardsManager = {
         (event) => util.clickOutsideHandler(addCardInputButton, addCardInput, e.target, event));
 
         addCardInputButton.addEventListener("click", createCard)
-    }
+    },
+    // loadArchiveList: function (cards, boardId, archiveContent) {
+    //     const archiveButton = document.getElementById("archive-button");
+    //     // for (let card of cards) {
+    //     //     if (card.archived) {
+    //     //         archiveButton.classList.remove('hidden');
+    //     //     }
+    //     // }
+    //     // archiveButton.addEventListener(
+    //     //     "click",
+    //     //     () => fillArchiveList(archiveContent, cards, boardId));
+    // }
 };
 
 async function createCard(event) {
@@ -99,12 +97,53 @@ async function deleteButtonHandler(e) {
     await initDragAndDrop();
 }
 
-async function archiveButtonHandler(boardId, cardArchived, event) {
+// function fillArchiveList(archiveContent, boardId) {
+//     archiveContent.innerHTML = "";
+//     let cards = document.querySelectorAll('.card');
+//     console.log(cards);
+//     for (let card of cards) {
+//
+//         if (card.archived) {
+//
+//             const modalCardBuilder = htmlFactory(htmlTemplates.archive);
+//             const content = modalCardBuilder(card);
+//             domManager.addChild(
+//                 "#archive-content",
+//                 content
+//             );
+//             domManager.addEventListener(
+//                 `.card-de-archive[data-card-id="${card.id}"]`,
+//                 "click",
+//                 async (event) => archiveButtonHandler(boardId, card.archived, archiveContent, event)
+//             );
+//         }
+//     }
+// }
+
+export async function archiveButtonHandler(boardId, cardArchived, archiveContent, event) {
+    const archiveButton = document.getElementById("archive-button");
     let cardId = event.currentTarget.dataset.cardId;
+    archiveButton.classList.remove('hidden');
     await dataHandler.updateArchivedStatus(cardId, cardArchived);
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
     await initDragAndDrop();
+    if (cardArchived) {
+        let content = event.target.parentElement.parentElement.parentElement;
+        let cardElement = document.querySelector(`.archived[data-card-id="${cardId}"]`);
+        content.removeChild(cardElement);
+        if (content.children.length === 0) {
+            archiveButton.classList.add('hidden');
+        }
+
+        // await fillArchiveList(archiveContent);
+    }
+    // if (archiveContent.children.length !== 0) {
+    //     console.log(archiveContent.children.length);
+    //
+    //     console.log(cardElement);
+    //     // archiveContent.removeChild(cardElement);
+    // }
 }
 
 function showCardInput(e) {
