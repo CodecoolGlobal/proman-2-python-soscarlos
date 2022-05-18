@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>ProMan</title>
+        <title>{% block title %}ProMan{% endblock %}</title>
 
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
@@ -18,17 +18,49 @@
               integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
               crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+        {% block script %}
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+        {% endblock %}
+        {% block header_buttons %}
+            {% if not user %}
+            <div class="user-button-container">
+                <a href="/login">
+                    <button class="user-button">Login</button>
+                </a>
+                <a href="/register">
+                    <button class="user-button" >Register</button>
+                </a>
+            </div>
+                {% else %}
+                <div class="user-button-container">
+                <a href="/logout">
+                    <button class="user-button">Logout</button>
+                </a>
+                </div>
+            {% endif %}
+        {% endblock %}
     </head>
+    {% block content %}
+        <body>
+            <h1 class="title">ProMan</h1>
+            <div>
+                {% if user %}
+                    <p-user>
+                        Welcome, {{ user }}
+                    </p-user>
+                {% endif %}
+            </div>
+            <div id="user-input" class="input-container">
+                <button id="reload-button" class="show-input">Reload</button><br><br>
+                <button class="show-input" id="show-input">Add Board</button><br><br>
+                <button type="button" class="show-input hidden" id="archive-button" data-bs-toggle="modal" data-bs-target="#archiveList">
+                    Archived cards
+                </button>
+            </div>
+            <div class="board-container" id="root"> </div>
+        </body>
+    {% endblock %}
     <body>
-        <h1>ProMan</h1>
-        <div id="user-input">
-            <button class="show-input" id="show-input">Add Board</button>
-        </div>
-        <button type="button" class="btn btn hidden" id="archive-button" data-bs-toggle="modal" data-bs-target="#archiveList">
-        Archived cards
-        </button>
-        <div class="board-container" id="root"> </div>
 
     <!-- Modal -->
     <div class="modal fade" id="archiveList" tabindex="-1" aria-labelledby="archiveListLabel" aria-hidden="true">

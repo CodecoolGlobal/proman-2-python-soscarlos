@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+{% block title %}Login{% endblock %}
+{% block script %}
+{% endblock %}
+{% block header_buttons %}
+{% endblock %}
+{% block content %}
+    <h1>Sign in</h1>
+    {% if err_msg %}
+        <div style="color: red; text-align: center; font-size: 25px; font-family: SansSerif;" >
+            {{ err_msg }}
+        </div>
+    {% endif %}
+    <div class="signin-box">
+        <form method="post">
+            <label>Username</label>
+            <input type="text" name="username">
+            <label>Password</label>
+            <input type="password" name="password">
+            <input type="Submit">
+        </form>
+    </div>
+{% endblock %}

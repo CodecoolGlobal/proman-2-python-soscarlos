@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block title %}Registration{% endblock %}
+{% block script %}
+{% endblock %}
+{% block header_buttons %}
+{% endblock %}
+{% block content %}
+    <h1>Sign up</h1>
+    {% if err_msg %}
+        <div style="color: red; text-align: center; font-size: 25px; font-family: SansSerif;" >
+        {{ err_msg }}
+        </div>
+    {% endif %}
+    <div class="signup-box">
+        <form method="post">
+            <label>Username</label>
+            <input type="text" name="username">
+            <label>Password</label>
+            <input type="password" name="password">
+            <label>Confirm Password</label>
+            <input type="password" name="repeat">
+            <input type="Submit">
+            <p>By clicking he Sign Up button, you agree to our <br>
+            <a href=#>Terms and Conditions</a> and <a href=#>Policy and Privacy</a>
+            </p>
+            <p2>Already have an account? <a href=#>Login here</a></p2>
+        </form>
+    </div>
+{% endblock %}
+

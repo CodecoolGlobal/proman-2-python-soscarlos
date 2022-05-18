@@ -1,6 +1,8 @@
 import {boardsManager} from "./controller/boardsManager.js";
 import {initDragAndDrop} from "./dragAndDrop.js";
 
+const reloadBtn = document.querySelector("#reload-button");
+
 async function init() {
     await boardsManager.loadBoards();
     await boardsManager.showInput();
@@ -9,4 +11,12 @@ async function init() {
 }
 
 init();
+
+function reloadPage(){
+    window.location.reload();
+}
+
+reloadBtn.addEventListener("click", function(){
+    reloadPage();
+});
 
