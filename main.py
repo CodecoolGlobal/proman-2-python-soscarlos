@@ -80,12 +80,13 @@ def get_cards_for_board(board_id: int):
 
 
 @app.route("/api/boards/create", methods=["POST"])
+@json_response
 def create_board():
     board = request.json
     board_title = board["title"]
     board_id = queries.create_board(board_title)
     print(board_id)
-    return render_template("index.html")
+    return board_id
 
 
 @app.route("/api/boards/<int:board_id>/cards/create", methods=["POST"])
@@ -110,6 +111,22 @@ def create_status():
     queries.create_status(title, board_id)
 
     return redirect("/")
+
+
+@app.route("/api/cards/<int:card_id>/update", methods=["PUT"])
+def update_card_name(card_id: int):
+    new_card_name = request.json
+    queries.update_card_name(card_id, new_card_name)
+
+    return render_template('index.html')
+
+
+@app.route("/api/cards/<int:card_id>/update/archived", methods=["PUT"])
+def update_archived_status(card_id: int):
+    new_archived_status = request.json
+    queries.update_archived(card_id, new_archived_status)
+
+    return render_template('index.html')
 
 
 @app.route("/api/cards/delete/<int:card_id>", methods=["DELETE"])
@@ -162,6 +179,20 @@ def login_user():
 def logout_user():
     session.clear()
     return redirect("/")
+
+  
+@app.route("/api/statuses/delete/<int:status_id>", methods=["DELETE"])
+def delete_status(status_id):
+    queries.delete_status(status_id)
+
+    return make_response("201")
+
+
+@app.route("/api/boards/delete/<int:board_id>", methods=["DELETE"])
+def delete_board(board_id):
+    queries.delete_board(board_id)
+
+    return make_response("201")
 
 
 def main():

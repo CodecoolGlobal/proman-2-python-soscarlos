@@ -20,7 +20,10 @@ export let dataHandler = {
     },
     createNewBoard: async function createBoard(boardTitle) {
         boardTitle = {title: boardTitle}
-        return await apiPost("/api/boards/create", boardTitle);
+        return await apiPost2("/api/boards/create", boardTitle);
+    },
+    deleteBoards: async function(boardId) {
+        return await apiDelete(`/api/boards/delete/${boardId}`);
     },
     createNewCard: async function (cardTitle, boardId, statusId, cardOrder) {
         let card = {"title": cardTitle,
@@ -29,8 +32,7 @@ export let dataHandler = {
         return await apiPost( `/api/boards/${boardId}/cards/create`, card);
     },
     deleteCard: async function (cardId) {
-        let id = {"id": cardId};
-      return   await apiDelete(`/api/cards/delete/${cardId}`, id);
+      return   await apiDelete(`/api/cards/delete/${cardId}`);
     },
     createNewStatus: async function (statusTitle, boardId) {
         let status =
@@ -40,8 +42,8 @@ export let dataHandler = {
             };
         return await apiPost('/api/statuses/create', status);
     },
-    delete_status: async function(statusId) {
-        return await fetch(`/api/statuses/delete/${statusId}`) ;
+    deleteStatus: async function(statusId) {
+        return await apiDelete(`/api/statuses/delete/${statusId}`);
     },
     updateBoardTitle: async function (boardTitle, boardId) {
 
@@ -56,8 +58,13 @@ export let dataHandler = {
         let statusIdNew =
             {
                 new_status_id: newStatusId
-            }
+            };
         return await apiPut(`/api/cards/${card_id}/update/${status_id}`, statusIdNew);
+    },
+    updateCardName: async function (cardId, name) {
+        let newCardName = {title: name};
+        return await apiPut(`/api/cards/${cardId}/update`, newCardName);
+
     },
     updateCardOrder: async function (card_id, new_order_id, status_id, old_pos) {
         let newCardOrder =
@@ -66,12 +73,30 @@ export let dataHandler = {
                 old_card_position: old_pos
             }
         return await apiPut(`/api/cards/${card_id}/update/${status_id}/card_order`, newCardOrder)
+    },
+    updateArchivedStatus: async function (cardId, cardArchived) {
+        let newArchivedStatus = {archived: !cardArchived};
+        return await apiPut(`/api/cards/${cardId}/update/archived`, newArchivedStatus)
     }
 };
 
 async function apiGet(url) {
     let response = await fetch(url, {
         method: "GET",
+    });
+    if (response.ok) {
+        return await response.json();
+    }
+}
+
+async function apiPost2(url, payload) {
+
+    let response = await fetch(url, {
+        method: "POST",
+        headers: {
+             "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
     });
     if (response.ok) {
         return await response.json();
@@ -88,7 +113,7 @@ async function apiPost(url, payload) {
         body: JSON.stringify(payload)
     });
     if (response.ok) {
-        return console.log(response.ok);
+        console.log(response.ok);
     }
 }
 
@@ -105,7 +130,7 @@ async function apiPut(url, payload) {
 
 async function apiDelete(url) {
     let response = await fetch(url, {method: "DELETE"});
-    console.log(url)
+    console.log(url);
     if (response.ok) {
         return console.log(response.ok);
     }

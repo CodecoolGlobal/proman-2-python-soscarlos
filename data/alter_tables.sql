@@ -11,3 +11,6 @@ ALTER TABLE boards
 ALTER TABLE boards
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id)
     REFERENCES users (id);
+
+ALTER TABLE ONLY cards
+    ADD COLUMN archived BOOLEAN DEFAULT FALSE;

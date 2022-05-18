@@ -47,13 +47,15 @@ def get_cards_for_board(board_id):
 
 
 def create_board(title):
-    data_manager.execute_query(
+    board_id = data_manager.execute_select(
         """
         INSERT INTO boards (title)
-        VALUES (%(title)s);
+        VALUES (%(title)s)
+        RETURNING id;
         """,
-        {"title": title}
+        {"title": title}, False
     )
+    return board_id
 
 
 def edit_title(board, board_id):
@@ -67,7 +69,8 @@ def edit_title(board, board_id):
 def create_card(card, board_id):
     data_manager.execute_query(
         """INSERT INTO cards (board_id, status_id, title, card_order)
-        VALUES (%(board_id)s, %(status_id)s, %(title)s, %(card_order)s)""",
+        VALUES (%(board_id)s, %(status_id)s, %(title)s, %(card_order)s)
+        """,
         {"title": card["title"],
          "board_id": board_id,
          "status_id": card["status_id"],
@@ -145,3 +148,41 @@ def update_cards_order(card_id, new_order_number, status_id, old_pos):
         ;
         """
         , (new_order_number, card_id, status_id, old_pos))
+
+
+def update_card_name(card_id, new_card_name):
+    return data_manager.execute_query(
+        """
+        UPDATE cards
+        set title = %(new_card_name)s
+        WHERE id = %(card_id)s;
+        """, {"new_card_name": new_card_name["title"],
+              "card_id": card_id
+              }
+    )
+
+
+def delete_status(status_id):
+    return data_manager.execute_query(
+        """
+        DELETE FROM statuses
+        WHERE id = %(status_id)s        
+        """, {"status_id": status_id})
+
+
+def update_archived(card_id, new_archived_status):
+    return data_manager.execute_query(
+        """
+        UPDATE cards
+        SET archived = %(new_archived_status)s
+        WHERE id = %(card_id)s
+        """, {"new_archived_status": new_archived_status["archived"],
+              "card_id": card_id})
+
+  
+def delete_board(board_id):
+    return data_manager.execute_query(
+        """
+        DELETE FROM boards
+        WHERE id = %(b_id)s
+        """, {"b_id": board_id})

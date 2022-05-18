@@ -15,7 +15,6 @@ export let boardsManager = {
             domManager.addChild("#root", content);
 
             await this.loadStatuses(board.id);
-
             domManager.addEventListener(
                 `.board-add[data-board-id="${board.id}"]`,
                 "click",
@@ -28,14 +27,19 @@ export let boardsManager = {
             );
             domManager.addEventListener(`.board-title[data-board-id="${board.id}"]`,
                 "click",
-                showEditTitle)
+                showEditTitle);
+
+            domManager.addEventListener(
+                    `.board-remove[data-board-id="${board.id}"]`,
+                    "click",
+                    async () => deleteBoard(board.id)
+                );
         }
     },
 
     loadStatuses: loadStatuses,
 
     showInput: showTitleInput,
-
 };
 
 function showHideButtonHandler(e) {
@@ -67,6 +71,8 @@ function showEditTitle(clickEvent) {
         if (inputId === boardId && titleId === boardId) {
             inputs[index].classList.remove('hidden');
             textTitles[index].classList.add('hidden');
+            inputs[index].focus();
+            inputs[index].select();
         }
     }
     document.addEventListener("click",
@@ -125,6 +131,11 @@ export async function loadStatuses(boardId) {
 
                 );
 
+                domManager.addEventListener(
+                    `.column-remove[data-status-id="${status.id}"]`,
+                    "click",
+                    async () => deleteStatusHandler(boardId, status.id)
+                );
             }
     }
 }
@@ -170,4 +181,36 @@ async function addNewColumn(e, boardId) {
         await boardsManager.loadStatuses(+boardId);
         await initDragAndDrop();
     }
+}
+
+async function deleteStatusHandler(boardId, statusId, deleteBoard=false) {
+    let columnContent = document.querySelector(`.board-column-content[data-status-id="${statusId}"]`);
+    if (columnContent.hasChildNodes()) {
+        let cards = columnContent.children;
+        for (let card of cards) {
+            let cardId = card.dataset.cardId;
+            await dataHandler.deleteCard(cardId);
+        }
+    }
+    await dataHandler.deleteStatus(statusId);
+    if (!deleteBoard) {
+        util.clearColumnsContainer(boardId);
+        await boardsManager.loadStatuses(+boardId);
+        await initDragAndDrop();
+    }
+}
+
+async function deleteBoard(boardId) {
+    let boardContent = document.querySelector(`.board-columns[data-board-id="${boardId}"]`);
+    if (boardContent.hasChildNodes()) {
+        const statuses = [...boardContent.children];
+        for (let status of statuses) {
+            let statusId = status.dataset.statusId;
+            await deleteStatusHandler(boardId, statusId, true);
+        }
+    }
+    await dataHandler.deleteBoards(boardId);
+    await util.clearRootContainer();
+    await boardsManager.loadBoards();
+    await initDragAndDrop();
 }

@@ -10,6 +10,8 @@ export let util = {
         inputDiv = event.target.nextSibling.nextSibling;
     textDiv.classList.add('hidden');
     inputDiv.classList.remove('hidden');
+    inputDiv.focus();
+    inputDiv.select();
     document.addEventListener('click',
         (event) => util.clickOutsideTitle(textDiv, inputDiv, event));
     inputDiv.addEventListener('keypress',

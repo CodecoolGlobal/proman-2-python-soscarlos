@@ -137,6 +137,20 @@ section.board{
     background: var(--status-4);
 }
 
+.fa-archive {
+    float: right;
+    margin-right: 20px;
+}
+
+.card-archive {
+    display: block;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
 .card-remove{
     display: block;
     position: absolute;
@@ -148,6 +162,7 @@ section.board{
 
 .card-title{
     padding-right: 16px;
+    cursor: pointer;
 }
 
 .hidden {
