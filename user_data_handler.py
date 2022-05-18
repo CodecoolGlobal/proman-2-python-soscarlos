@@ -4,10 +4,11 @@ import data_manager as dm
 
 @dm.connection_handler
 def check_pw(cursor, username, password):
-    query = "SELECT * FROM users WHERE %(username)s "
-    cursor.execute(query, (username,))
+    print("inside checkpw")
+    query = "SELECT * FROM users WHERE username=%s "
+    cursor.execute(query, [username])
     data = cursor.fetchone()
-    return check_password_hash(data['password'], password)
+    return check_password_hash(data.get('password'), password)
 
 
 @dm.connection_handler
@@ -31,10 +32,11 @@ def insert_user(cursor, username, password):
 @dm.connection_handler
 def login(cursor, username, password):
     query = "SELECT * FROM users WHERE username=%s"
-    cursor.execute(query, (username,))
+    cursor.execute(query,(username,))
     data = cursor.fetchone()
+    print(data)
     if data:
-        if check_pw(data["username"], password):
+        if check_pw(data.get('username'), password):
             return data
         else:
             return False

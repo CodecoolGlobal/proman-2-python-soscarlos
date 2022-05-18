@@ -19,18 +19,34 @@
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
         {% endblock %}
         {% block header_buttons %}
+            {% if not user %}
             <div class="user-button-container">
-                <button class="user-button">Login</button>
+                <a href="/login">
+                    <button class="user-button">Login</button>
+                </a>
                 <a href="/register">
                     <button class="user-button" >Register</button>
                 </a>
-
             </div>
+                {% else %}
+                <div class="user-button-container">
+                <a href="/logout">
+                    <button class="user-button">Logout</button>
+                </a>
+                </div>
+            {% endif %}
         {% endblock %}
     </head>
     {% block content %}
         <body>
             <h1 class="title">ProMan</h1>
+            <div>
+                {% if user %}
+                    <p-user >
+                        Welcome, {{ user }}
+                    </p-user>
+                {% endif %}
+            </div>
             <div id="user-input" class="input-container">
                 <button class="show-input" id="show-input">Add Board</button>
             </div>
