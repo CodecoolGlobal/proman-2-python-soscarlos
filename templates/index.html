@@ -45,27 +45,22 @@
             <h1 class="title">ProMan</h1>
             <div>
                 {% if user %}
-                    <p-user >
+                    <p-user>
                         Welcome, {{ user }}
                     </p-user>
                 {% endif %}
             </div>
             <div id="user-input" class="input-container">
-                <button class="show-input" id="show-input">Add Board</button>
+                <button id="reload-button" class="show-input">Reload</button><br><br>
+                <button class="show-input" id="show-input">Add Board</button><br><br>
+                <button type="button" class="show-input" id="modal-button" data-bs-toggle="modal" data-bs-target="#archiveList">
+                    Archived cards
+                </button>
             </div>
             <div class="board-container" id="root"> </div>
         </body>
     {% endblock %}
     <body>
-        <h1>ProMan</h1>
-        <button id="reload-button">Reload</button><br><br>
-        <div id="user-input">
-            <button class="show-input" id="show-input">Add Board</button>
-        </div>
-        <button type="button" class="btn btn" id="modal-button" data-bs-toggle="modal" data-bs-target="#archiveList">
-        Archived cards
-        </button>
-        <div class="board-container" id="root"> </div>
 
     <!-- Modal -->
     <div class="modal fade" id="archiveList" tabindex="-1" aria-labelledby="archiveListLabel" aria-hidden="true">

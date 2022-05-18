@@ -173,14 +173,15 @@ section.board{
     opacity: .5;
 }
 
-#show-input {
+.show-input {
     font-size: 24px;
+    size: 30px;
 }
 
 .signup-box {
     padding-top: 20px;
     width: 380px;
-    height: 420px;
+    height: 440px;
     margin: auto;
     background-color: white;
 }
@@ -188,7 +189,7 @@ section.board{
 .signin-box {
     padding-top: 20px;
     width: 380px;
-    height: 210px;
+    height: 250px;
     margin: auto;
     background-color: white;
 }
@@ -243,5 +244,5 @@ p-user {
     text-align: center;
     padding-left: 100px;
     position: relative;
-    top: -100px;
+    top: -70px;
 }
