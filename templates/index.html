@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>ProMan</title>
+        <title>{% block title %}ProMan{% endblock %}</title>
 
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
@@ -15,14 +15,26 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+        {% block script %}
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
-    </head>
-    <body>
-        <h1>ProMan</h1>
-        <div id="user-input">
-            <button class="show-input" id="show-input">Add Board</button>
-        </div>
-        <div class="board-container" id="root"> </div>
+        {% endblock %}
+        {% block header_buttons %}
+            <div class="user-button-container">
+                <button class="user-button">Login</button>
+                <a href="/register">
+                    <button class="user-button" >Register</button>
+                </a>
 
-    </body>
+            </div>
+        {% endblock %}
+    </head>
+    {% block content %}
+        <body>
+            <h1 class="title">ProMan</h1>
+            <div id="user-input" class="input-container">
+                <button class="show-input" id="show-input">Add Board</button>
+            </div>
+            <div class="board-container" id="root"> </div>
+        </body>
+    {% endblock %}
 </html>

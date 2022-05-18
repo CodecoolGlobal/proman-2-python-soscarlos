@@ -28,7 +28,7 @@ async function getUserInput(e) {
         deleteInputDiv();
 
         await dataHandler.createNewBoard(userInput);
-        let boards = document.querySelectorAll(".board");
+        let boards = await document.querySelectorAll(".board");
         for (let i=0; i < statuses.length; i++){
                 let title = statuses[i];
                 let boardId = boards.length + 1;

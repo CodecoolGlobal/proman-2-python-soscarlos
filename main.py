@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from util import json_response
 import mimetypes
 import queries
+import user_data_handler
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
@@ -81,8 +82,8 @@ def get_cards_for_board(board_id: int):
 def create_board():
     board = request.json
     board_title = board["title"]
-    queries.create_board(board_title)
-
+    board_id = queries.create_board(board_title)
+    print(board_id)
     return render_template("index.html")
 
 
@@ -115,6 +116,31 @@ def delete_card(card_id):
     queries.delete_card(card_id)
 
     return make_response("201")
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register_user():
+    if request.method == 'POST':
+        user = request.form.get('username')
+        pw = request.form.get('password')
+        repeat = request.form.get('repeat')
+        print(user, pw, repeat)
+        if user and pw and repeat:
+            if user_data_handler.check_available_username(user):
+                error_message = "Username already taken biatch"
+                print(error_message)
+            elif pw != repeat:
+                error_message = "Passwords don't match biatch"
+                print(error_message)
+            else:
+                print("I put into db")
+                user_data_handler.insert_user(user, pw)
+                return redirect('/')
+            return render_template('register.html', err_msg=error_message)
+        else:
+            error_message = "Please fill all the fields out biatch"
+            return render_template('register.html', err_msg=error_message)
+    return render_template("register.html")
 
 
 def main():

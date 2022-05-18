@@ -62,3 +62,14 @@ def execute_query(statement, variables=None):
     with establish_connection() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(statement, variables)
+
+
+def connection_handler(function):
+    def wrapper(*args, **kwargs):
+        connection = establish_connection()
+        dict_cur = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        ret_value = function(dict_cur, *args, **kwargs)
+        dict_cur.close()
+        connection.close()
+        return ret_value
+    return wrapper
