@@ -70,15 +70,13 @@ async function callArchiveButton() {
     }
     archiveButton.addEventListener(
             "click",
-            (event) => fillArchiveList(cards, archiveContent));
+            (event) => fillArchiveList());
 }
 
-export async function fillArchiveList(cards, archiveContent) {
+export async function fillArchiveList() {
     let parentDiv = document.querySelector('#archive-content');
-    console.log(parentDiv);
-    console.log(archiveContent);
-    archiveContent.innerHTML = "";
-    // let cards = await dataHandler.getCards();
+    let cards = await dataHandler.getCards();
+    parentDiv.innerHTML = "";
     for (let card of cards) {
         if (card.archived) {
             const modalCardBuilder = htmlFactory(htmlTemplates.archive);
@@ -90,7 +88,7 @@ export async function fillArchiveList(cards, archiveContent) {
             domManager.addEventListener(
                 `.card-de-archive[data-card-id="${card.id}"]`,
                 "click",
-                async (event) => archiveButtonHandler(card.board_id, card.archived, archiveContent, event)
+                async (event) => archiveButtonHandler(card.board_id, card.archived, event)
             );
         }
     }
