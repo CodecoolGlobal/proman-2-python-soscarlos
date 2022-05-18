@@ -21,6 +21,10 @@ h1{
     font-size: 4em;
     letter-spacing: 5px;
     transform: scale(1.2, 1);
+    display: inline-block;
+    margin-left: 450px;
+    margin-right: auto;
+    width: 8em;
 }
 
 button{
@@ -30,6 +34,18 @@ button{
     font-size: 14px;
     font-family: sans-serif;
     padding: 4px 10px;
+}
+
+.user-button-container{
+    float: right;
+    padding-right: 250px;
+    padding-top: 20px;
+}
+
+.user-button{
+    padding: 10px 20px;
+    font-size: 15px;
+    font-family: sans-serif;
 }
 
 .board-container{
@@ -42,6 +58,10 @@ section.board{
     border: aliceblue;
     background: #ffffff90;
     border-radius: 3px;
+}
+
+.input-container{
+    padding-left: 240px;
 }
 
 .board-header{
@@ -155,4 +175,73 @@ section.board{
 
 #show-input {
     font-size: 24px;
+}
+
+.signup-box {
+    padding-top: 20px;
+    width: 380px;
+    height: 420px;
+    margin: auto;
+    background-color: white;
+}
+
+.signin-box {
+    padding-top: 20px;
+    width: 380px;
+    height: 210px;
+    margin: auto;
+    background-color: white;
+}
+
+form {
+    width: 300px;
+    margin-left: 20px;
+}
+
+form label {
+    display: flex;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+form input {
+    width: 100%;
+    padding: 6px;
+    border: none;
+    border: 1px solid gray;
+    border-radius: 7px;
+    outline: none;
+}
+
+input[type="Submit"]{
+    width: 200px;
+    height: 35px;
+    margin-top: 15px;
+    margin-left: 70px;
+    border: none;
+    background-color: #49c1a2;
+    color: white;
+    font-size: 20px;
+}
+
+p{
+    text-align: center;
+    padding-top: 20px;
+    font-size: 14px;
+    padding-left: 15px;
+}
+
+p2 {
+    font-size: 10px;
+    padding-top: 20px;
+    text-align: center;
+    padding-left: 80px;
+}
+
+p-user {
+    font-size: 30px;
+    text-align: center;
+    padding-left: 100px;
+    position: relative;
+    top: -100px;
 }
