@@ -1,7 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
-import {cardsManager} from "./cardsManager.js";
+import {cardsManager, archiveButtonHandler} from "./cardsManager.js";
 import {createInputField} from "../getUserInput.js";
 import {util} from "../util/util.js";
 import {initDragAndDrop} from "../dragAndDrop.js";
@@ -40,6 +40,8 @@ export let boardsManager = {
     loadStatuses: loadStatuses,
 
     showInput: showTitleInput,
+
+    callArchiveButton: callArchiveButton,
 };
 
 function showHideButtonHandler(e) {
@@ -56,6 +58,42 @@ function showTitleInput() {
     addBoard.addEventListener('click', createInputField);
 
 }
+
+async function callArchiveButton() {
+    const archiveButton = document.getElementById("archive-button");
+    const archiveContent = document.getElementById("archive-content");
+    let cards = await dataHandler.getCards();
+    for (let card of cards) {
+        if (card.archived) {
+            archiveButton.classList.remove('hidden');
+        }
+    }
+    archiveButton.addEventListener(
+            "click",
+            (event) => fillArchiveList());
+}
+
+export async function fillArchiveList() {
+    let parentDiv = document.querySelector('#archive-content');
+    let cards = await dataHandler.getCards();
+    parentDiv.innerHTML = "";
+    for (let card of cards) {
+        if (card.archived) {
+            const modalCardBuilder = htmlFactory(htmlTemplates.archive);
+            const content = modalCardBuilder(card);
+            domManager.addChild(
+                "#archive-content",
+                content
+            );
+            domManager.addEventListener(
+                `.card-de-archive[data-card-id="${card.id}"]`,
+                "click",
+                async (event) => archiveButtonHandler(card.board_id, card.archived, event)
+            );
+        }
+    }
+}
+
 
 function showEditTitle(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;

@@ -6,6 +6,7 @@ const reloadBtn = document.querySelector("#reload-button");
 async function init() {
     await boardsManager.loadBoards();
     await boardsManager.showInput();
+    await boardsManager.callArchiveButton();
     await initDragAndDrop();
 }
 

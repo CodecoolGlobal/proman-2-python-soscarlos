@@ -53,7 +53,7 @@
             <div id="user-input" class="input-container">
                 <button id="reload-button" class="show-input">Reload</button><br><br>
                 <button class="show-input" id="show-input">Add Board</button><br><br>
-                <button type="button" class="show-input" id="modal-button" data-bs-toggle="modal" data-bs-target="#archiveList">
+                <button type="button" class="show-input hidden" id="archive-button" data-bs-toggle="modal" data-bs-target="#archiveList">
                     Archived cards
                 </button>
             </div>
@@ -70,12 +70,8 @@
             <h5 class="modal-title" id="archiveListLabel">List of archived cards</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body" id="modal-content">
-            <!-- cards -->
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+          <div class="modal-body" id="archive-content">
+
           </div>
         </div>
       </div>

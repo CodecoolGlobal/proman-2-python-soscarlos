@@ -2,12 +2,14 @@ export const htmlTemplates = {
     board: 1,
     card: 2,
     status: 3,
+    archive: 4
 }
 
 export const builderFunctions = {
     [htmlTemplates.board]: boardBuilder,
     [htmlTemplates.card]: cardBuilder,
-    [htmlTemplates.status]: columnBuilder
+    [htmlTemplates.status]: columnBuilder,
+    [htmlTemplates.archive]: modalCardBuilder,
 };
 
 export function htmlFactory(template) {
@@ -52,6 +54,17 @@ function cardBuilder(card, statusId) {
             </div>
             `;
 }
+
+function modalCardBuilder(card) {
+    return `<div class="card archived" data-card-id="${card.id}" data-status-id="${card.status_id}" data-board-id="${card.board_id}" >
+                <div class="card-de-archive" data-card-id="${card.id}"><i class="fa fa-archive"></i></div>
+
+                <div class="card-title" data-card-id="${card.id}">${card.title}</div> 
+            
+            </div>
+            `;
+}
+
 
 function columnBuilder(status, boardId) {
     return `

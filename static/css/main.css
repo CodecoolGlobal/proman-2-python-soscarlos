@@ -142,16 +142,7 @@ section.board{
     margin-right: 20px;
 }
 
-.card-archive {
-    display: block;
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.card-remove{
+.card-archive, .card-de-archive, .card-remove {
     display: block;
     position: absolute;
     top: 4px;

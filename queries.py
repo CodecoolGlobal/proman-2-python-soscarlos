@@ -186,3 +186,11 @@ def delete_board(board_id):
         DELETE FROM boards
         WHERE id = %(b_id)s
         """, {"b_id": board_id})
+
+
+def get_cards():
+    return data_manager.execute_select(
+        """
+        SELECT *
+        FROM cards
+        """)

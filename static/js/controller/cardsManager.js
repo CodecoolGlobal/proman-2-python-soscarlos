@@ -1,7 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
-import {boardsManager} from "./boardsManager.js";
+import {boardsManager, fillArchiveList} from "./boardsManager.js";
 import {util} from "../util/util.js";
 import {initDragAndDrop} from "../dragAndDrop.js";
 
@@ -13,7 +13,6 @@ export let cardsManager = {
                 const cardBuilder = htmlFactory(htmlTemplates.card);
                 const content = cardBuilder(card, statusId);
                 if (card.status_id === statusId) {
-
                     domManager.addChild(
                     `.board-column-content[data-board-id="${boardId}"][data-status-id="${statusId}"]`,
                         content
@@ -37,20 +36,6 @@ export let cardsManager = {
                     showCardInput
                     );
                 }
-            } else {
-                const cardBuilder = htmlFactory(htmlTemplates.card);
-                const content = cardBuilder(card, statusId);
-                if (card.status_id === statusId) {
-                    domManager.addChild(
-                    "#modal-content",
-                                 content
-                    );
-                    domManager.addEventListener(
-                        `.card-archive[data-card-id="${card.id}"]`,
-                        "click",
-                        async (event) => archiveButtonHandler(boardId, card.archived, event)
-                    );
-                }
             }
         }
     },
@@ -67,7 +52,7 @@ export let cardsManager = {
         (event) => util.clickOutsideHandler(addCardInputButton, addCardInput, e.target, event));
 
         addCardInputButton.addEventListener("click", createCard)
-    }
+    },
 };
 
 async function createCard(event) {
@@ -99,12 +84,22 @@ async function deleteButtonHandler(e) {
     await initDragAndDrop();
 }
 
-async function archiveButtonHandler(boardId, cardArchived, event) {
+export async function archiveButtonHandler(boardId, cardArchived, event) {
+    const archiveButton = document.getElementById("archive-button");
     let cardId = event.currentTarget.dataset.cardId;
+    archiveButton.classList.remove('hidden');
     await dataHandler.updateArchivedStatus(cardId, cardArchived);
     util.clearColumnsContainer(boardId);
     await boardsManager.loadStatuses(+boardId);
     await initDragAndDrop();
+    if (cardArchived) {
+        let content = event.target.parentElement.parentElement.parentElement;
+        let cardElement = document.querySelector(`.archived[data-card-id="${cardId}"]`);
+        content.removeChild(cardElement);
+        if (content.children.length === 0) {
+            archiveButton.classList.add('hidden');
+        }
+    }
 }
 
 function showCardInput(e) {
