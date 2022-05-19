@@ -9,7 +9,7 @@ connection = psycopg2.connect(connection_string)
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
-app.config["SERVER_NAME"] = 'localhost.localdomain:5000'
+# app.config["SERVER_NAME"] = 'localhost.localdomain:5000'
 load_dotenv()
 app.secret_key = "Super Duper Secret Key"
 
