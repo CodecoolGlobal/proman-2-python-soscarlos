@@ -196,7 +196,7 @@ form {
 
 form label {
     display: flex;
-    margin-top: 15px;
+    margin-top: 13px;
     font-size: 16px;
 }
 
@@ -235,9 +235,9 @@ p2 {
 }
 
 p-user {
-    font-size: 30px;
+    font-size: 35px;
     text-align: center;
-    padding-left: 100px;
+    padding-left: 250px;
     position: relative;
     top: -70px;
 }
@@ -246,4 +246,16 @@ h1i {
     padding-top: 10%;
     padding-left: 35%;
     font-size: 120px;
+}
+
+h1s {
+    padding-left: 40%;
+    font-size: 100px;
+    padding-top: 10%;
+}
+
+h1r {
+    padding-left: 39%;
+    font-size: 100px;
+    padding-top: 10%;
 }
