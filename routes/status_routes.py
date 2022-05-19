@@ -1,4 +1,4 @@
-from __main__ import app
+from main import app
 from flask import render_template, request, redirect, make_response
 
 from util import json_response
