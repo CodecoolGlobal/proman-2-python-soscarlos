@@ -1,4 +1,4 @@
-:root{
+:root {
     --border-radius: 3px;
     --status-1: #590000;
     --status-2: #594300;
@@ -6,17 +6,17 @@
     --status-4: #085900;
 }
 
-body{
+body {
     min-width: 620px;
     background: #ddd url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/diagonal-noise.png);
     font-family: sans-serif;
 }
 
-h1, .board-title, .board-column-title{
+h1, .board-title, .board-column-title {
     font-weight: 100;
 }
 
-h1{
+h1 {
     text-align: center;
     font-size: 4em;
     letter-spacing: 5px;
@@ -27,7 +27,7 @@ h1{
     width: 8em;
 }
 
-button{
+button {
     background: #222;
     color: #fff;
     border: none;
@@ -36,73 +36,74 @@ button{
     padding: 4px 10px;
 }
 
-.user-button-container{
+.user-button-container {
     float: right;
     padding-right: 20%;
     padding-top: 4%;
     background-size: 50px;
 }
 
-.user-button{
+.user-button {
     padding: 10px 20px;
     font-size: 25px;
     font-family: sans-serif;
 }
 
-.board-container{
+.board-container {
     max-width: 1500px;
     padding-left: 17%;
     padding-right: 10%;
 }
 
-section.board{
+section.board {
     margin: 20px;
     border: aliceblue;
     background: #ffffff90;
     border-radius: 3px;
 }
 
-.input-container{
+.input-container {
     padding-left: 17%;
     padding-top: 10%;
 }
 
-.board-header{
+.board-header {
     height: 50px;
     background: #fff;
     border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
-.board-title{
+.board-title {
     margin: 13px;
     display: inline-block;
     font-size: 20px;
 }
-.board-title, .board-add, .toggle-board-button{
+
+.board-title, .board-add, .toggle-board-button {
     display: inline-block;
 }
 
-.toggle-board-button{
+.toggle-board-button {
     float: right;
     margin: 13px;
 }
 
-.board-columns{
+.board-columns {
     display: flex;
     flex-wrap: nowrap;
     background-color: lightgray;
 }
 
-.board-column{
+.board-column {
     padding: 10px;
     flex: 1;
 }
 
-.board-column-content{
+.board-column-content {
     min-height: 49px;
 }
 
-.board-column-content:empty{
+.board-column-content:empty {
     /*This only works if the tag is really empty and there is not even whitespace inside*/
     border: 4px solid #cdcdcd;
     margin-top: 4px;
@@ -110,11 +111,11 @@ section.board{
     background: #eee;
 }
 
-.board-column-title{
+.board-column-title {
     text-align: center;
 }
 
-.card{
+.card {
     position: relative;
     background: #222;
     color: #fff;
@@ -124,19 +125,19 @@ section.board{
     cursor: move;
 }
 
-.board-column:nth-of-type(1) .card{
+.board-column:nth-of-type(1) .card {
     background: var(--status-1);
 }
 
-.board-column:nth-of-type(2) .card{
+.board-column:nth-of-type(2) .card {
     background: var(--status-2);
 }
 
-.board-column:nth-of-type(3) .card{
+.board-column:nth-of-type(3) .card {
     background: var(--status-3);
 }
 
-.board-column:nth-of-type(4) .card{
+.board-column:nth-of-type(4) .card {
     background: var(--status-4);
 }
 
@@ -154,7 +155,7 @@ section.board{
     cursor: pointer;
 }
 
-.card-title{
+.card-title {
     padding-right: 16px;
     cursor: pointer;
 }
@@ -208,7 +209,7 @@ form input {
     outline: none;
 }
 
-input[type="Submit"]{
+input[type="Submit"] {
     width: 200px;
     height: 35px;
     margin-top: 15px;
@@ -219,7 +220,7 @@ input[type="Submit"]{
     font-size: 20px;
 }
 
-p{
+p {
     text-align: center;
     padding-top: 20px;
     font-size: 14px;
