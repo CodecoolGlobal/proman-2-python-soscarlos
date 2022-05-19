@@ -15,7 +15,7 @@ export function createInputField() {
         btn.textContent = "Add";
         btn.addEventListener("click", getUserInput);
         inputDiv.append(input, btn);
-        document.querySelector("#user-input").appendChild(inputDiv);
+        document.querySelector("#show-input").appendChild(inputDiv);
         inputBtn.disabled = true;
 
 }

@@ -38,19 +38,21 @@ button{
 
 .user-button-container{
     float: right;
-    padding-right: 250px;
-    padding-top: 20px;
+    padding-right: 20%;
+    padding-top: 4%;
+    background-size: 50px;
 }
 
 .user-button{
     padding: 10px 20px;
-    font-size: 15px;
+    font-size: 25px;
     font-family: sans-serif;
 }
 
 .board-container{
-    max-width: 960px;
-    margin: 0 auto;
+    max-width: 1500px;
+    padding-left: 17%;
+    padding-right: 10%;
 }
 
 section.board{
@@ -62,6 +64,7 @@ section.board{
 
 .input-container{
     padding-left: 17%;
+    padding-top: 10%;
 }
 
 .board-header{
@@ -236,4 +239,10 @@ p-user {
     padding-left: 100px;
     position: relative;
     top: -70px;
+}
+
+h1i {
+    padding-top: 10%;
+    padding-left: 35%;
+    font-size: 120px;
 }
