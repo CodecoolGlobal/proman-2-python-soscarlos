@@ -1,10 +1,9 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-import data_manager as dm
+from data import data_manager as dm
 
 
 @dm.connection_handler
 def check_pw(cursor, username, password):
-    print("inside checkpw")
     query = "SELECT * FROM users WHERE username=%s "
     cursor.execute(query, [username])
     data = cursor.fetchone()
