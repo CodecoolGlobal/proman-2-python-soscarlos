@@ -1,7 +1,6 @@
 from __main__ import app
 from flask import render_template, request, redirect, session
 
-
 import mimetypes
 from queries import user_data_handler
 
@@ -19,10 +18,8 @@ def register_user():
         if user and pw and repeat:
             if user_data_handler.check_available_username(user):
                 error_message = "Username already taken biatch"
-                print(error_message)
             elif pw != repeat:
                 error_message = "Passwords don't match biatch"
-                print(error_message)
             else:
                 user_data_handler.insert_user(user, pw)
                 return redirect("/")
@@ -40,7 +37,6 @@ def login_user():
         session["pw"] = request.form.get("password")
         user_credentials = user_data_handler.login(session["user"], session["pw"])
         if user_credentials:
-            print("I AM LOGGED IN")
             return render_template("index.html", user=session["user"])
         else:
             session.clear()

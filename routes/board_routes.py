@@ -35,7 +35,6 @@ def create_board():
     board = request.json
     board_title = board["title"]
     board_id = board_queries.create_board(board_title)
-    print(board_id)
     return board_id
 
 
