@@ -33,7 +33,6 @@ def login(cursor, username, password):
     query = "SELECT * FROM users WHERE username=%s"
     cursor.execute(query,(username,))
     data = cursor.fetchone()
-    print(data)
     if data:
         if check_pw(data.get('username'), password):
             return data
