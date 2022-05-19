@@ -1,14 +1,9 @@
 {
   "name": "Proman 2",
-  "short-name": "Proman 2",
-  "start-url": ".",
-  "serviceworker": {
-    "src": "service-worker.js",
-    "scope": "/",
-    "update_via_cache": "none"
-  },
+  "short-name": "Proman",
+  "start-url": "http://127.0.0.1:5000/",
   "display": "standalone",
-  "background-color": "#FFFFE0",
+  "background-color": "#fff",
   "description": "Better than Trello",
   "icons": [
     {
