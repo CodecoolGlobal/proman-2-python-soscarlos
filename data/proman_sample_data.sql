@@ -34,7 +34,7 @@ CREATE TABLE boards (
 CREATE TABLE cards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     board_id    INTEGER             NOT NULL,
-    status_id   INTEGER             NOT NULL,);
+    status_id   INTEGER             NOT NULL);
 
 
 CREATE TABLE statuses (
@@ -59,22 +59,28 @@ CREATE TABLE cards (
     card_order  INTEGER             NOT NULL
 );
 
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY NOT NULL,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL
+);
+
 ---
 --- insert data
 ---
 
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 2', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'in progress card', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'planning', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 2', 2);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'in progress card', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'planning', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 1);
-INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 2);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 1', 1);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 1, 'new card 2', 2);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 2, 'in progress card', 1);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 3, 'planning', 1);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 1);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 1, 4, 'done card 1', 2);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 1', 1);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 1, 'new card 2', 2);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 2, 'in progress card', 1);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 3, 'planning', 1);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 1);
+-- INSERT INTO cards VALUES (nextval('cards_id_seq'), 2, 4, 'done card 1', 2);
 
 ---
 --- add constraints
